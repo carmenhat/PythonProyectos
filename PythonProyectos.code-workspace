@@ -1,0 +1,28 @@
+{
+  "folders": [
+    {
+      "path": "00_basicos"
+    },
+    {
+      "path": "01_scripts_utiles"
+    },
+    {
+      "path": "02_web_scraping"
+    },
+    {
+      "path": "03_data_analysis"
+    },
+    {
+      "path": "99_experimentos"
+    }
+  ],
+  "settings": {
+    "python.pythonPath": "python", 
+    "files.exclude": {
+      "**/__pycache__": true
+    },
+    "explorer.confirmDelete": false,
+    "editor.tabSize": 4,
+    "editor.formatOnSave": true
+  }
+}
