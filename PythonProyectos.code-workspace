@@ -14,10 +14,49 @@
     },
     {
       "path": "99_experimentos"
+    },
+    {
+      "path": "04_machine_learning"
+    },
+    {
+      "path": "05_automatizacion"
+    },
+    {
+      "path": "06_algoritmos_y_estructuras"
+    },
+    {
+      "path": "07_web_development"
+    },
+    {
+      "path": "10_cursos"
+    },
+    {
+      "path": "14_inteligencia_artificial"
+    },
+    {
+      "path": "15_robotica"
+    },
+    {
+      "path": "16_herramientas_productividad"
+    },
+    {
+      "path": "17_juegos"
+    },
+    {
+      "path": "18_apps_moviles"
+    },
+    {
+      "path": "30_recursos_compartidos"
+    },
+    {
+      "path": "08_proyecto_futbol"
+    },
+    {
+      "path": "09_proyecto_salud"
     }
   ],
   "settings": {
-    "python.pythonPath": "python", 
+    "python.pythonPath": "python",
     "files.exclude": {
       "**/__pycache__": true
     },
