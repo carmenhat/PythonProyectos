@@ -1,0 +1,17 @@
+# Tras extraer el país
+paises = [c["label"] for c in pelicula.get("countries", [])]
+paises_str = ", ".join(paises)
+
+datos_peliculas.append({
+    "Año": año,
+    "Sección": nombre_seccion,
+    "Título": pelicula.get("title", "").strip(),
+    "Director": pelicula.get("director", "").strip() if pelicula.get("director") else "",
+    "Duración": pelicula.get("duration"),
+    "Categoría": pelicula.get("category", {}).get("label", ""),
+    "Países": paises_str,
+    "Enlace": f"https://www.festival-cannes.com/en/festival/films/{pelicula.get('id')}",
+    "España": "España" in paises or "Spain" in paises,
+    "Francia": "Francia" in paises or "France" in paises,
+    "EEUU": "États-Unis" in paises or "USA" in paises or "United States" in paises
+})
