@@ -1,4 +1,13 @@
 # Tras extraer el país
+# Incluiremos una columna adicional en tu DataFrame indicando si la película es de:
+
+España 🇪🇸
+
+Francia 🇫🇷
+
+Estados Unidos 🇺🇸
+
+Esto lo haremos comprobando si el campo "Países" contiene esas etiquetas. También podríamos normalizar los nombres de los países, por si hay variantes (“Spain” vs “España”).
 paises = [c["label"] for c in pelicula.get("countries", [])]
 paises_str = ", ".join(paises)
 
