@@ -48,8 +48,8 @@ for i, row in df.iterrows():
 df["productoras"] = productoras
 
 # Guardar resultado
-df.to_excel("cannes_oficial_wiki_con_productoras.xlsx", index=False)
-print("✅ Archivo actualizado con productoras guardado como 'cannes_oficial_wiki_con_productoras.xlsx'")
+df.to_excel("datos_generados/cannes_oficial_wiki_con_productoras.xlsx", index=False)
+print("✅ Archivo actualizado con productoras guardado como 'datos_generados/cannes_oficial_wiki_con_productoras.xlsx'")
 
 
 

@@ -2,7 +2,7 @@ import pandas as pd
 from collections import Counter
 
 # Cargar el Excel generado anteriormente
-df = pd.read_excel("cannes_oficial_wiki_con_productoras.xlsx")
+df = pd.read_excel("datos_generados/cannes_oficial_wiki_con_productoras.xlsx")
 
 # Nos aseguramos de que no haya nulos
 df = df[df["productoras"].notna() & df["country_esp_fra_usa"].notna()].copy()

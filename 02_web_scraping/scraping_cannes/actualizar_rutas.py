@@ -4,12 +4,12 @@ import re
 # Configuración
 directorio_raiz = "02_web_scraping"
 nuevas_rutas = {
-    "productoras.py": "scripts_finalizados/productoras.py",
-    "nuevo_intento_productoras.py": "scripts_finalizados/nuevo_intento_productoras.py",
-    "no_vale_scrape_cannes_no_oficiales.py": "scripts_incompletos/no_vale_scrape_cannes_no_oficiales.py",
-    "cannes_oficial.xlsx": "datos_generados/cannes_oficial.xlsx",
-    "cannes_no_oficiales_con_paises.xlsx": "datos_generados/cannes_no_oficiales_con_paises.xlsx",
-    "cannes_oficial_wiki_con_productoras.xlsx": "datos_generados/cannes_oficial_wiki_con_productoras.xlsx"
+    "scripts_finalizados/productoras.py": "scripts_finalizados/productoras.py",
+    "scripts_finalizados/nuevo_intento_productoras.py": "scripts_finalizados/nuevo_intento_productoras.py",
+    "scripts_incompletos/no_vale_scrape_cannes_no_oficiales.py": "scripts_incompletos/no_vale_scrape_cannes_no_oficiales.py",
+    "datos_generados/cannes_oficial.xlsx": "datos_generados/cannes_oficial.xlsx",
+    "datos_generados/cannes_no_oficiales_con_paises.xlsx": "datos_generados/cannes_no_oficiales_con_paises.xlsx",
+    "datos_generados/cannes_oficial_wiki_con_productoras.xlsx": "datos_generados/cannes_oficial_wiki_con_productoras.xlsx"
 }
 
 # Buscar y reemplazar rutas en los scripts
