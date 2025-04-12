@@ -1,8 +1,10 @@
 import os
 import pandas as pd
+import matplotlib
+matplotlib.use("Agg")  # Usar backend sin GUI
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+# este script guarda el gráfico en un archivo PNG
 # Obtener la ruta del directorio donde está el script
 script_dir = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(script_dir, "cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx")
@@ -47,4 +49,6 @@ plt.xlabel("Año")
 plt.ylabel("Número de películas")
 plt.legend(title="País")
 plt.tight_layout()
-plt.show()
+
+# Guardar el gráfico en un archivo
+plt.savefig("grafico_cannes_comparativa.png")

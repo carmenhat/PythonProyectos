@@ -1,10 +1,8 @@
 import os
 import pandas as pd
-import matplotlib
-matplotlib.use("Agg")  # Usar backend sin GUI
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+# este script visualiza la participación de España, Francia y EEUU en las secciones oficiales de Cannes entre 2015 y 2024
 # Obtener la ruta del directorio donde está el script
 script_dir = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(script_dir, "cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx")
@@ -49,6 +47,4 @@ plt.xlabel("Año")
 plt.ylabel("Número de películas")
 plt.legend(title="País")
 plt.tight_layout()
-
-# Guardar el gráfico en un archivo
-plt.savefig("grafico_cannes.png")
+plt.show()
