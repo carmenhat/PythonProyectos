@@ -1,0 +1,11 @@
+para solucionar problemas de compatibilidad con otros ordenadores
+clonar el proyecto o copiar los archivos
+crear un entorno virtual:
+python3 -m venv .venv
+source .venv/bin/activate  # En Linux/Mac
+.venv\Scripts\activate     # En Windows
+instalar las dependencias
+
+pip install -r requirements.txt
+
+esto es para visualizaciones 
