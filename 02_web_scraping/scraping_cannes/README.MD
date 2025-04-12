@@ -1,6 +1,6 @@
-el  cuaderno recopila películas de las secciones no oficiales del Festival de Cannes (2015–2024), identifica si pertenecen a España, Francia o EEUU, y guarda los datos en un Excel.
+el  cuaderno recopila películas de las secciones oficiales y no oficiales del Festival de Cannes (2015–2024), identifica si pertenecen a España, Francia o EEUU, y guarda los datos en un Excel.
 Notas técnicas
-La Quincena de Realizadores y la Semana de la Crítica podrían no estar disponibles en la API oficial, ya que no están organizadas directamente por el festival, sino por otras entidades. Si no aparecen datos en esas secciones, lo confirmamos mirando con DevTools y quizá tengamos que hacer scraping tradicional para esas dos.
+La Quincena de Realizadores y la Semana de la Crítica podrían no estar disponibles ya que no están organizadas directamente por el festival, sino por otras entidades. Si no aparecen datos en esas secciones, lo confirmamos mirando con DevTools y quizá tengamos que hacer scraping tradicional para esas dos.
 
 El archivo cannes_no_oficiales_con_paises.xlsx tendrá columnas como:
 
@@ -44,3 +44,4 @@ Top directores de cada país destacado
 Proporción de películas por país
 → Gráfico de tarta o barras horizontales.
 
+por parte de la sección oficial tengo que añadir
