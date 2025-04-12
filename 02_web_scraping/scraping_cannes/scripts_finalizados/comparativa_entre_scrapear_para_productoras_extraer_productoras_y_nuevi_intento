@@ -1,0 +1,119 @@
+Analizaré los tres archivos de código en detalle, centrándome en su funcionalidad, salidas y puntos complejos:
+
+---
+
+## 🔍 **Comparativa Detallada de los 3 Archivos**
+
+### 1. **`scrapear_para_productoras.py`**
+#### 📝 **Qué hace**
+- Extrae datos **básicos de Wikipedia** sobre películas de Cannes (2015-2023)
+- Incluye: título, director, países y productoras (si están en tablas de Wikipedia)
+- Genera enlaces a fichas de películas en Wikipedia
+- Identifica banderas de España/Francia/EEUU
+
+#### 🎯 **Salida**  
+`cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx`
+
+#### 💣 **Puntos complejos**  
+- **Estructura variable** de tablas en Wikipedia (requiere lógica flexible)
+- **Problema detectado**:  
+  ```python
+  COUNTRIES_LIST = [...]  # Definida pero no usada
+  # En su lugar usa lista hardcodeada en el loop (línea 56)
+  ```
+- **Posible bug**: El nombre del archivo generado (línea 87) no coincide con el comentario inicial: corregido
+
+---
+
+### 2. **`nuevo_intento_productoras.py`**
+#### 📝 **Qué hace**  
+- **Amplía el archivo Excel anterior** añadiendo productoras desde Wikipedia
+- Usa los enlaces generados previamente para acceder a páginas individuales de películas
+- Busca en la **infobox** de Wikipedia (sección estructurada con datos clave)
+
+#### 🎯 **Salida**  
+`cannes_oficial_wiki_con_productoras.xlsx`
+
+#### 💣 **Puntos complejos**  
+- Dependencia del archivo generado por el primer script
+- **Estructuras HTML inconsistentes**:  
+  ```python
+  infobox = soup.find("table", class_="infobox vevent")  # No siempre existe
+  ```
+- **Procesamiento de texto** no estandarizado en las celdas
+
+---
+
+### 3. **`extraer_productoras_imdb.py`**
+#### 📝 **Qué hace**  
+- Busca **datos de IMDb** usando el título y año de las películas
+- **2 fases**:  
+  1. Obtener ID de IMDb mediante búsqueda aproximada  
+  2. Extraer productoras de la página de créditos de la película
+
+#### 🎯 **Salida**  
+`cannes_con_productoras_imdb.xlsx`
+
+#### 💣 **Puntos complejos**  
+- **Tasa de error alta**:  
+  - Búsqueda de ID por título no siempre precisa  
+  - Estructuras HTML de IMDb cambiantes (ej: selectores CSS en líneas 54-59)
+- **Limitaciones técnicas**:  
+  ```python
+  time.sleep(2)  # Necesario para evitar bloqueos
+  ```
+- **Dificultad adicional**:  
+  ```python
+  "Accept-Language": "en-US..."  # Requiere contenido en inglés
+  ```
+
+---
+
+## 📊 **Tabla Comparativa**
+
+| Archivo                      | Fuente     | Datos Obtenidos               | Fiabilidad | Complejidad |
+|------------------------------|------------|--------------------------------|------------|-------------|
+| `scrapear_para_productoras.py` | Wikipedia  | Datos básicos + enlaces        | Alta       | Media       |
+| `nuevo_intento_productoras.py`| Wikipedia  | Productoras (infobox)          | Media*     | Baja        |
+| `extraer_productoras_imdb.py` | IMDb       | Productoras detalladas         | Baja**     | Alta        |
+
+_*Depende de que exista infobox  
+_**Según comentario del usuario: "funcionó a medias"_: faltaban bastantes datos
+
+
+---
+
+## 🚨 **Problemas Detectados**
+1. **Inconsistencia en nombres de archivo**:  
+   - `scrapear_para_productoras.py` promete generar `..._y_enlaces.xlsx` pero guarda `..._y_enlaces_y_productoras.xlsx` (línea 87): corregido
+
+2. **Dependencia circular**:  
+   - `nuevo_intento_productoras.py` requiere el output de `scrapear_para_productoras.py`, pero este último ya intenta extraer productoras
+
+3. **Falta de manejo de errores robusto** en IMDb:  
+   - No hay reintentos automáticos ante fallos
+   - No se guarda progreso parcial
+
+---
+
+## 💡 **Recomendación Final**
+1. **Conservar**:  
+   - `scrapear_para_productoras.py` (corrigiendo el nombre de archivo de salida)
+   - `nuevo_intento_productoras.py` (como ampliación opcional)
+
+2. **Descartar**:  
+   - `extraer_productoras_imdb.py` (por su baja fiabilidad según tu comentario)
+
+**Alternativa pro**: Si necesitas datos de IMDb, sugiero combinar ambos approaches usando:  
+```python
+# Estrategia híbrida
+df["productoras"] = df["production_company"].fillna(df["imdb_production_companies"])
+```
+
+Citations:
+[1] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/38825368/3bc6ce39-e041-433b-9a3d-7ecaeaa6b2f0/nuevo_intento_productoras.py
+[2] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/38825368/d9890e25-4ced-4649-9d05-d41aae156320/scrapear_para_productoras.py
+[3] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/38825368/25e09add-faa4-43ee-914b-ab117f091f9b/extraer_productoras_imdb.py
+
+---
+Respuesta de Perplexity: pplx.ai/share

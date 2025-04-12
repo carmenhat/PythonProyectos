@@ -1,5 +1,7 @@
 
 # nueva prueba para extraer productoras de IMDb
+# funcionó a medias, fallaron muchas películas: crée el nuevo script updated-imdb-scraper.py 
+
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd

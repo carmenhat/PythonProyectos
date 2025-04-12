@@ -2,6 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import time
+# creando un script para extraer los datos de las productoras de las películas de la sección oficial del festival de cannes
+# de los años 2015 a 2023
+# Importar las librerías necesarias
+# crea el excel cannes_seccion_oficial_wiki_con_paises_y_enlaces_y_productoras.xlsx
 
 YEARS = list(range(2015, 2024))
 BASE_WIKI_URL = "https://en.wikipedia.org/wiki/{}"

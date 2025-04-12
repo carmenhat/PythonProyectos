@@ -263,7 +263,8 @@ def main():
     """Función principal que procesa el Excel de Cannes y enriquece con datos de IMDb."""
     try:
         # Cargar el archivo Excel existente
-        input_file = "cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx"
+        input_file = "02_web_scraping/scraping_cannes/datos_generados/cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx" 
+        
         print(f"📊 Cargando archivo '{input_file}'...")
         df = pd.read_excel(input_file)
         

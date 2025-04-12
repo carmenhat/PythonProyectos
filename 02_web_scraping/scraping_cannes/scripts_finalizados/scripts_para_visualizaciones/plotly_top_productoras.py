@@ -5,6 +5,9 @@ from pathlib import Path
 # estoy automatizando el proceso de generación del gráfico interactivo: voy a crear un script que lo haga automáticamente
 # y lo guardaré en el directorio actual
 # así puedo crear más ficheros de este tipo y no perder el tiempo
+# Importar los datos
+# Cambia la ruta del archivo según sea necesario
+
 
 file_path = Path("datos_generados/cannes_oficial_wiki_con_productoras.xlsx")
 print(f"Ruta del archivo: {file_path.resolve()}")

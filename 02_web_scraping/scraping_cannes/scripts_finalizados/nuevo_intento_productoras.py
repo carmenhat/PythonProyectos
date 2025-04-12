@@ -2,8 +2,17 @@ from pathlib import Path
 
 # Este script busca las productoras de las películas en Wikipedia
 # y las añade a un archivo Excel existente con la información de Cannes.
-# Asegúrate de tener el archivo "cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx" en la misma carpeta que este script.
+# Asegúrate de tener el archivo "cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx" en la misma carpeta que este script
+# o proporciona la ruta correcta al archivo.
+# Este archivo debe contener las columnas "film_wiki_url" y "title".
+# Si no tienes el archivo, puedes generarlo ejecutando el script "scrapear_para_productoras.py".
 # Si no lo tienes, primero ejecuta el script "scrapear_para_productoras.py" para generarlo.
+# genera el excel cannes oficial wiki con productoras que luego se usa para la visualización
+# de las productoras más frecuentes por país.
+# Este script es una continuación del anterior y se basa en el archivo generado por él.
+# Asegúrate de tener las librerías necesarias instaladas:
+# pip install pandas requests beautifulsoup4 openpyxl
+
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup

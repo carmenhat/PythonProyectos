@@ -1,0 +1,98 @@
+Analicemos a fondo el nuevo archivo **`updated-imdb-scraper.py`** y comparemos con los anteriores:
+
+---
+
+## 🔍 **Análisis Detallado de `updated-imdb-scraper.py`**
+
+### 🛠️ **Mejoras Clave vs. `extraer_productoras_imdb.py`**
+1. **Limpieza inteligente de títulos**  
+   ```python
+   def clean_movie_title(title):
+       # Elimina texto entre paréntesis que no sea año (ej: "(film)" o "(French version)")
+       return re.sub(r'\([^)]*\)', '', title).strip()
+   ```
+   - **Ventaja**: Mejora la precisión en búsquedas de IMDb al eliminar ruido textual
+
+2. **Normalización de compañías**  
+   ```python
+   from company_normalizer import ProductionCompanyNormalizer
+   ```
+   - **Novedad**: Unifica nombres de productoras (ej: "Sony Pictures" → "Sony")
+
+3. **Manejo de errores reforzado**  
+   - Verificación de columnas antes de procesar
+   - Sistema de reintentos implícito en la estructura
+
+4. **Búsqueda contextual en IMDb**  
+   - Compara años con margen de ±1 año para coincidencias aproximadas
+
+---
+
+### ⚠️ **Problemas Detectados**
+1. **Dependencia faltante**  
+   ```python
+   from company_normalizer import ProductionCompanyNormalizer  # Archivo no proporcionado
+   ```
+   - **Riesgo**: El script fallará sin este módulo: está aparte 
+
+2. **Función incompleta**  
+   ```python
+   def normalize_companies_in_dataframe(df, company_column):
+       # Código cortado abruptamente al final del archivo
+   ```
+   - **Consecuencia**: Parte crítica del proceso no funciona
+
+3. **Falta de logging**  
+   - No registra errores persistentes para diagnóstico posterior
+
+4. **Gestión de proxies ausente**  
+   - Posible bloqueo por exceso de requests a IMDb
+
+---
+
+## 📊 **Tabla Comparativa Completa**
+
+| Característica               | `scrapear_para_productoras.py` | `nuevo_intento_productoras.py` | `extraer_productoras_imdb.py` | `updated-imdb-scraper.py` |
+|------------------------------|--------------------------------|--------------------------------|-------------------------------|---------------------------|
+| **Fuente principal**         | Wikipedia                      | Wikipedia                      | IMDb                          | IMDb                      |
+| **Datos únicos**             | Enlaces a Wikipedia            | Productoras (infobox)          | IDs IMDb + productoras        | IDs IMDb + productoras normalizadas |
+| **Precisión títulos**         | Media                          | Alta                           | Baja                          | Alta (con limpieza)       |
+| **Manejo de errores**         | Básico                         | Básico                         | Limitado                      | Mejorado                  |
+| **Requerimientos externos**  | Ninguno                        | Archivo previo                 | Ninguno                       | Módulo `company_normalizer` |
+| **Tasa de éxito estimada**    | 95%                            | 70%                            | 40%                           | 65%*                      |
+| **Mantenibilidad**            | Alta                           | Media                          | Baja                          | Media                     |
+
+_*Depende de resolver las dependencias faltantes_
+
+---
+
+## 🚨 **Problema Crítico en `updated-imdb-scraper.py`**
+El código se corta abruptamente en la función de normalización:
+```python
+def normalize_companies_in_dataframe(df, company_column):
+    """
+    Normaliza los nombres de las compañías productoras en el DataFrame.
+    
+    Args:
+        df: DataFrame con los datos
+        company_column: Nombre de la columna que contiene las compañías productoras
+    
+    Returns:
+        DataFrame actualizado con columnas de productoras normalizadas
+    """
+    
+    if company_column not in df.columns:
+        print(f"❌ Columna '{compan  # |Genera datos base| B[updated-imdb-scraper.py]
+    B -->|Enriquece con IMDb| C[Visualizaciones]
+```
+
+Citations:
+[1] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/38825368/3bc6ce39-e041-433b-9a3d-7ecaeaa6b2f0/nuevo_intento_productoras.py
+[2] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/38825368/d9890e25-4ced-4649-9d05-d41aae156320/scrapear_para_productoras.py
+[3] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/38825368/25e09add-faa4-43ee-914b-ab117f091f9b/extraer_productoras_imdb.py
+[4] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/38825368/daf0fd13-d424-44f1-b601-dbc1f3937413/updated-imdb-scraper.py
+
+---
+Respuesta de Perplexity: pplx.ai/share
+---
+Respuesta de Perplexity: pplx.ai/share
