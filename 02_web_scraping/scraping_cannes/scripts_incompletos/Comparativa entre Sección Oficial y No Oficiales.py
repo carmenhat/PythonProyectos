@@ -1,7 +1,7 @@
 # pendiente de hacer: necesito el segundo dataset
 # Cargar ambos
-df_no = pd.read_excel("datos_generados/cannes_no_oficiales_con_paises.xlsx")
-df_of = pd.read_excel("datos_generados/cannes_oficial.xlsx")
+df_no = pd.read_excel("datos_generados/datos_generados/cannes_no_oficiales_con_paises.xlsx")
+df_of = pd.read_excel("datos_generados/datos_generados/cannes_oficial.xlsx")
 
 # Añadir tipo de sección
 df_no["Tipo"] = "No oficiales"

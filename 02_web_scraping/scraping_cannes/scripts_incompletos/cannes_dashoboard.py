@@ -7,8 +7,8 @@ import plotly.express as px
 import streamlit as st
 
 # Cargar datos
-no_of = pd.read_excel("datos_generados/cannes_no_oficiales_con_paises.xlsx")
-of = pd.read_excel("datos_generados/cannes_oficial.xlsx")
+no_of = pd.read_excel("datos_generados/datos_generados/cannes_no_oficiales_con_paises.xlsx")
+of = pd.read_excel("datos_generados/datos_generados/cannes_oficial.xlsx")
 
 # Añadir columna de tipo
 no_of["Tipo"] = "No Oficiales"

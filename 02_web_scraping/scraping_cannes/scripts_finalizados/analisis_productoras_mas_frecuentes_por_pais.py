@@ -2,7 +2,7 @@ import pandas as pd
 from collections import Counter
 
 # Cargar el Excel generado anteriormente
-df = pd.read_excel("datos_generados/cannes_oficial_wiki_con_productoras.xlsx")
+df = pd.read_excel("datos_generados/datos_generados/cannes_oficial_wiki_con_productoras.xlsx")
 
 # Nos aseguramos de que no haya nulos
 df = df[df["productoras"].notna() & df["country_esp_fra_usa"].notna()].copy()
@@ -41,5 +41,5 @@ for pais in df_top["País"].unique():
     print(df_top[df_top["País"] == pais][["Productora", "Apariciones"]].to_string(index=False))
 
 # Guardar como Excel adicional si lo deseas
-df_top.to_excel("top_productoras_por_pais.xlsx", index=False)
-print("\n✅ Archivo guardado: 'top_productoras_por_pais.xlsx'")
+df_top.to_excel("datos_generados/top_productoras_por_pais.xlsx", index=False)
+print("\n✅ Archivo guardado: 'datos_generados/top_productoras_por_pais.xlsx'")

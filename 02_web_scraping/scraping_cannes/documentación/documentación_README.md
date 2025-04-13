@@ -16,7 +16,7 @@ Este proyecto está diseñado para recopilar información sobre las películas d
 - **`scripts_incompletos/`**: Scripts en desarrollo o con problemas.
   - `no_vale_scrape_cannes_no_oficiales.py`: Intenta scrapear secciones no oficiales usando una API, pero requiere revisión.
 
-- **`visualizaciones/`**: Resultados de las visualizaciones generadas por los scripts (gráficos en HTML, PNG, etc.).
+- **`visualizaciones/`**: Resultados de las visualizaciones generadas por los scripts (gráficos en HTML, PNG, etc.). Dashboard en STREAMLIT. 
 
 - **`notebook/`**: Un notebook Jupyter que sirve como el resumen y ejecución principal del proyecto.
 
@@ -24,13 +24,14 @@ Este proyecto está diseñado para recopilar información sobre las películas d
 
 ## Objetivos del Proyecto
 
-1. Scrapear datos de las secciones oficiales y no oficiales del Festival de Cannes (2015-2024).
+1. Scrapear datos de las secciones oficiales del Festival de Cannes (2015-2024). (O 2023, PORQUE 2024 ESTÁ INCOMPLETO)
 2. Guardar los datos en archivos Excel con columnas como:
    - Año, Sección, Título, Director, Duración, Categoría, Países, etc.
 3. Visualizaciones planeadas:
    - Barras apiladas por sección y país.
    - Evolución por año y país.
-   - Top directores de cada país destacado.
+   - Top productoras de cada país destacado.
+   COMPLETAR ESTO
 
 ## Cómo empezar
 

@@ -129,7 +129,7 @@ def main():
     """Función principal que procesa el Excel de Cannes y enriquece con datos de IMDb."""
     try:
         # Cargar el archivo Excel existente
-        df = pd.read_excel("cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx")
+        df = pd.read_excel("datos_generados/cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx")
         
         # Añadir columnas para IMDb
         if "imdb_id" not in df.columns:
@@ -166,8 +166,8 @@ def main():
             time.sleep(2)
         
         # Guardar resultados
-        df.to_excel("cannes_con_productoras_imdb.xlsx", index=False)
-        print("\n✅ Datos guardados en 'cannes_con_productoras_imdb.xlsx'")
+        df.to_excel("datos_generados/cannes_con_productoras_imdb.xlsx", index=False)
+        print("\n✅ Datos guardados en 'datos_generados/cannes_con_productoras_imdb.xlsx'")
         
     except Exception as e:
         print(f"Error en el procesamiento: {e}")

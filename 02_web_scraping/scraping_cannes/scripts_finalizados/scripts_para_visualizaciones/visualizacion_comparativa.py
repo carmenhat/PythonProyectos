@@ -5,7 +5,7 @@ import seaborn as sns
 # este script visualiza la participación de España, Francia y EEUU en las secciones oficiales de Cannes entre 2015 y 2024
 # Obtener la ruta del directorio donde está el script
 script_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(script_dir, "cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx")
+file_path = os.path.join(script_dir, "datos_generados/cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx")
 
 # Cargar el Excel
 df = pd.read_excel(file_path)

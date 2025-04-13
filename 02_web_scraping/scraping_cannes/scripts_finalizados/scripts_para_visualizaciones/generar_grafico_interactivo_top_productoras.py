@@ -7,7 +7,7 @@ import plotly.express as px
 from collections import Counter
 
 # Cargar los datos con productoras
-df = pd.read_excel("datos_generados/cannes_oficial_wiki_con_productoras.xlsx")
+df = pd.read_excel("datos_generados/datos_generados/cannes_oficial_wiki_con_productoras.xlsx")
 
 # Filtrar y preparar los datos
 df = df[df["productoras"].notna() & df["country_esp_fra_usa"].notna()].copy()
@@ -49,8 +49,8 @@ fig = px.bar(
 
 fig.update_layout(template="plotly_white", yaxis={"categoryorder": "total ascending"})
 fig.show()
-fig.write_html("top_productoras.html")
-print("✅ Gráfico guardado como 'top_productoras.html'")
+fig.write_html("visualizaciones/top_productoras.html")
+print("✅ Gráfico guardado como 'visualizaciones/top_productoras.html'")
 '''
 
 # Guardar el archivo en el directorio actual

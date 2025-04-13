@@ -87,5 +87,5 @@ for year in YEARS:
     time.sleep(1)
 
 films_df = pd.DataFrame(data)
-films_df.to_excel("cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx", index=False)
-print("\n✅ Datos guardados en 'cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx'")
+films_df.to_excel("datos_generados/cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx", index=False)
+print("\n✅ Datos guardados en 'datos_generados/cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx'")

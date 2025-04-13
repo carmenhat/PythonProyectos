@@ -1,18 +1,9 @@
 import pandas as pd
 import plotly.express as px
 from collections import Counter
-from pathlib import Path
-# estoy automatizando el proceso de generación del gráfico interactivo: voy a crear un script que lo haga automáticamente
-# y lo guardaré en el directorio actual
-# así puedo crear más ficheros de este tipo y no perder el tiempo
-# Importar los datos
-# Cambia la ruta del archivo según sea necesario
 
-
-file_path = Path("datos_generados/datos_generados/cannes_oficial_wiki_con_productoras.xlsx")
-print(f"Ruta del archivo: {file_path.resolve()}")
-
-df = pd.read_excel("datos_generados//home/carmen/Documentos/repositorio_python/PythonProyectos/02_web_scraping/scraping_cannes/cannes_oficial_wiki_con_productoras.xlsx")
+# Cargar los datos con productoras
+df = pd.read_excel("datos_generados/datos_generados/cannes_oficial_wiki_con_productoras.xlsx")
 
 # Filtrar y preparar los datos
 df = df[df["productoras"].notna() & df["country_esp_fra_usa"].notna()].copy()
@@ -25,7 +16,7 @@ df["pais"] = df["country_esp_fra_usa"].map({
 })
 
 df = df[df["pais"].notna()]
-df["productoras_lista"] = df["productoras"].str.split(r",\s*")
+df["productoras_lista"] = df["productoras"].str.split(",\s*")
 
 # Extraer top 10 por país
 resultados = []

@@ -7,7 +7,7 @@ import seaborn as sns
 # este script guarda el gráfico en un archivo PNG
 # Obtener la ruta del directorio donde está el script
 script_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(script_dir, "cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx")
+file_path = os.path.join(script_dir, "datos_generados/cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx")
 
 # Cargar el Excel
 df = pd.read_excel(file_path)
@@ -51,4 +51,4 @@ plt.legend(title="País")
 plt.tight_layout()
 
 # Guardar el gráfico en un archivo
-plt.savefig("grafico_cannes_comparativa.png")
+plt.savefig("visualizaciones/grafico_cannes_comparativa.png")
