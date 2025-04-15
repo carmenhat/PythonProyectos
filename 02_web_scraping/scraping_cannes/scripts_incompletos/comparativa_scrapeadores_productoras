@@ -1,0 +1,113 @@
+scrapear_para_productoras.py , nuevo_intento_productoras.py , extraer_productoras_imdb.py
+
+🔍 Comparativa Detallada de los 3 Archivos
+1. scrapear_para_productoras.py
+📝 Qué hace
+Extrae datos básicos de Wikipedia sobre películas de Cannes (2015-2023)
+
+Incluye: título, director, países y productoras (si están en tablas de Wikipedia)
+
+Genera enlaces a fichas de películas en Wikipedia
+
+Identifica banderas de España/Francia/EEUU
+
+🎯 Salida
+cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx
+
+💣 Puntos complejos
+Estructura variable de tablas en Wikipedia (requiere lógica flexible)
+
+Problema detectado:
+
+python
+COUNTRIES_LIST = [...]  # Definida pero no usada
+# En su lugar usa lista hardcodeada en el loop (línea 56)
+Posible bug: El nombre del archivo generado (línea 87) no coincide con el comentario inicial
+
+2. nuevo_intento_productoras.py
+📝 Qué hace
+Amplía el archivo Excel anterior añadiendo productoras desde Wikipedia
+
+Usa los enlaces generados previamente para acceder a páginas individuales de películas
+
+Busca en la infobox de Wikipedia (sección estructurada con datos clave)
+
+🎯 Salida
+cannes_oficial_wiki_con_productoras.xlsx
+
+💣 Puntos complejos
+Dependencia del archivo generado por el primer script
+
+Estructuras HTML inconsistentes:
+
+python
+infobox = soup.find("table", class_="infobox vevent")  # No siempre existe
+Procesamiento de texto no estandarizado en las celdas
+
+3. extraer_productoras_imdb.py
+📝 Qué hace
+Busca datos de IMDb usando el título y año de las películas
+
+2 fases:
+
+Obtener ID de IMDb mediante búsqueda aproximada
+
+Extraer productoras de la página de créditos de la película
+
+🎯 Salida
+cannes_con_productoras_imdb.xlsx
+
+💣 Puntos complejos
+Tasa de error alta:
+
+Búsqueda de ID por título no siempre precisa
+
+Estructuras HTML de IMDb cambiantes (ej: selectores CSS en líneas 54-59)
+
+Limitaciones técnicas:
+
+python
+time.sleep(2)  # Necesario para evitar bloqueos
+Dificultad adicional:
+
+python
+"Accept-Language": "en-US..."  # Requiere contenido en inglés
+📊 Tabla Comparativa
+Archivo	Fuente	Datos Obtenidos	Fiabilidad	Complejidad
+scrapear_para_productoras.py	Wikipedia	Datos básicos + enlaces	Alta	Media
+nuevo_intento_productoras.py	Wikipedia	Productoras (infobox)	Media*	Baja
+extraer_productoras_imdb.py	IMDb	Productoras detalladas	Baja**	Alta
+_*Depende de que exista infobox
+**Según comentario del usuario: "funcionó a medias"
+
+🚨 Problemas Detectados
+Inconsistencia en nombres de archivo:
+
+scrapear_para_productoras.py promete generar ..._y_enlaces.xlsx pero guarda ..._y_enlaces_y_productoras.xlsx (línea 87)
+
+Dependencia circular:
+
+nuevo_intento_productoras.py requiere el output de scrapear_para_productoras.py, pero este último ya intenta extraer productoras
+
+Falta de manejo de errores robusto en IMDb:
+
+No hay reintentos automáticos ante fallos
+
+No se guarda progreso parcial
+
+💡 Recomendación Final
+Conservar:
+
+scrapear_para_productoras.py (corrigiendo el nombre de archivo de salida)
+
+nuevo_intento_productoras.py (como ampliación opcional)
+
+Descartar:
+
+extraer_productoras_imdb.py (por su baja fiabilidad según tu comentario)
+
+Alternativa pro: Si necesitas datos de IMDb, sugiero combinar ambos approaches usando:
+
+python
+# Estrategia híbrida
+df["productoras"] = df["production_company"].fillna(df["imdb_production_companies"])
