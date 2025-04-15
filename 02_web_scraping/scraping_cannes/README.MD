@@ -92,6 +92,8 @@ Clonar el repositorio:
 
 git clone https://github.com/carmenhat/PythonProyectos.git
 cd PythonProyectos/02_web_scraping/scraping_cannes 
+```
+
 
 Instalar dependencias: Asegúrate de tener Python instalado y ejecuta:
 
