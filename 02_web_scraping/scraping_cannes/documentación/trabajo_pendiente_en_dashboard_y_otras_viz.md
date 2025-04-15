@@ -1,6 +1,5 @@
 Estructura general del dashboard en Streamlit:
 
-Estructura general del dashboard en Streamlit:
 
 organizar dashboard en varias secciones o pestañas para facilitar la navegación y la comprensión de la información. Algunas secciones posibles podrían ser:
 
