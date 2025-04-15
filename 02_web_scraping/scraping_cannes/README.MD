@@ -1,47 +1,26 @@
-el  cuaderno recopila películas de las secciones oficiales y no oficiales del Festival de Cannes (2015–2024), identifica si pertenecen a España, Francia o EEUU, y guarda los datos en un Excel.
-Notas técnicas
-La Quincena de Realizadores y la Semana de la Crítica podrían no estar disponibles ya que no están organizadas directamente por el festival, sino por otras entidades. Si no aparecen datos en esas secciones, lo confirmamos mirando con DevTools y quizá tengamos que hacer scraping tradicional para esas dos.
+El  cuaderno recopila películas de las secciones oficiales del Festival de Cannes (2015–2023), identifica si pertenecen a España, Francia o EEUU (he añadido más países), y guarda los datos en un Excel.
+*Notas técnicas+
+He creado un script para scrapear las películas seleccionadas para el Festival de Cannes entre 2015 y 2023 , guardar los resultados en un Excel e incluir columnas que destaquen
+Comencé intentado scrapear la página del Festival pero no había mucha información. Me fui entonces a la wikipedia, recogí bastantes datos allí, pero no todas las películas tenían info. 
+Entonces lo completé con la página de IMDB, primero obtuve el código IMDB de cada película. 
+Se me ocurrió también averiguar las productoras de cada película para intentar hacer un top (solamente de los países destacados)
+Primero la idea era hacer una comparativa entre Francia (país anfitrión), España (mi país) y USA , pero se quedaba un poco corto y decidí ampliar a una docena de países (buscando en general los que habían tenido más participación)
+Con los cambios de idea, ampliaciones de proyecto y ser mi primera vez, el flujo de trabajo es un poco lioso (por ejemplo, he creado varios scrapers que a lo mejor son un poco redundantes): primero scrapeando wikipedia, creando un excel y sobre ese excel intentar enriquecerlo con nuevos scrapeos.
+Por otro lado, soy consciente de que podía haber usado APIs de IMDB (encontré varias) pero quería esta vez practicar cómo se obtiene información de una web (y tanto wikipedia como IMDB son fáciles)
+Otro problema que tuve fue que los nombres de las productoras no estaban normalizados 
 
-El archivo cannes_no_oficiales_con_paises.xlsx tendrá columnas como:
-
+El archivo .xlsx definitivo tendrá columnas como:
 Año
-
-Sección
-
 Título
-
-Director
-
-Duración
-
-Categoría
-
 Países
-
 España (True/False)
-
 Francia (True/False)
-
 EEUU (True/False)
+Enlace 
+Productoras
 
-Enlace
 
-el script completo y actualizado para scrapear las secciones no oficiales del Festival de Cannes entre 2015 y 2024, guardar los resultados en un Excel e incluir columnas que destaquen si las películas provienen de España, Francia o Estados Unidos es scrape...no oficiales
+visualizaciones: dashboard y alguna cosilla más
+He creado un dashboard con toda la información recopilada (usando streamlit): nombre provisional dashboard_cannes_mejorado
 
-visualizaciones:
-Visualizaciones que destacan estos países
-Con esta información ya puedes hacer cosas como:
 
-Barras apiladas por sección y país destacado
-→ ¿Qué sección da más espacio a cada país?
-
-Evolución por año y país
-→ ¿Crece o baja la representación de España, Francia o USA con los años?
-
-Top directores de cada país destacado
-→ ¿Qué cineastas españoles, franceses y estadounidenses aparecen más?
-
-Proporción de películas por país
-→ Gráfico de tarta o barras horizontales.
-
-por parte de la sección oficial tengo que añadir
