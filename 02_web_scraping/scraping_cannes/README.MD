@@ -20,15 +20,24 @@ Creación de un dashboard interactivo con la información recopilada, utilizando
 Este proyecto tiene un enfoque educativo y práctico, ya que se desarrolló para practicar técnicas de scraping y organización de datos.
 
 ### Requisitos Técnicos ###
+
 Lenguajes utilizados: Python (para scraping y procesamiento de datos).
+
 Herramientas:
+
 Scraping: Wikipedia e IMDB.
+
 Visualización: Streamlit.
+
 Almacenamiento: Archivo Excel (.xlsx).
+
 APIs: Aunque se podrían haber utilizado APIs, el propósito fue practicar scraping manual.
 
+
 ### Estructura del Proyecto ###
-Archivo Excel Final
+
+Archivo Excel Final:
+
 El archivo Excel contiene las siguientes columnas:
 
 year: Año de estreno.
@@ -55,7 +64,7 @@ productoras_consolidadas_normalized: Nombres normalizados de las productoras.
 
 country_expanded: Países adicionales incluidos para análisis.
 
-Notas Importantes
+#### Notas Importantes ####
 
 Se han creado varias columnas relacionadas con las productoras para garantizar la precisión de los datos.
 Las columnas director y section todavía no se están utilizando en el análisis.
@@ -65,27 +74,42 @@ Inicialmente, el proyecto se centró en comparar Francia, España y Estados Unid
 El flujo de trabajo incluye:
 
 Scraping:
+
 Extracción inicial desde la página oficial del Festival (limitada información encontrada).
+
 Recolección de datos desde Wikipedia (datos incompletos).
+
 Complementación de datos con IMDB (obteniendo los códigos IMDB de las películas).
+
+
 Procesamiento:
+
 Normalización de nombres de productoras (problemas con variantes de escritura).
+
 Consolidación de datos en un archivo Excel.
+
 Visualización:
+
 Creación de un dashboard interactivo con Streamlit.
+
 Enfoque principal en España y comparativas internacionales.
 
 ### Visualizaciones ###
+
 Se ha desarrollado un dashboard interactivo utilizando Streamlit, con el nombre provisional dashboard_cannes_mejorado. Este incluye:
 
 Información recopilada de las películas.
+
 Comparativas iniciales entre los países destacados.
+
 Tareas pendientes:
 
 Añadir más funcionalidades al dashboard.
+
 Crear visualizaciones centradas en España y comparativas más detalladas.
 
 ### Cómo Usar ###
+
 Clonar el repositorio:
 
 ```bash
@@ -116,16 +140,25 @@ streamlit run dashboard_cannes_mejorado.py
 ### Retos y Aprendizajes ###
 
 Scraping:
+
 Wikipedia e IMDB fueron fuentes clave, pero no todas las películas incluían información completa.
+
 Decidí practicar scraping manual en lugar de usar APIs para reforzar habilidades.
+
 Normalización:
+
 Los nombres de las productoras presentaron muchas variantes, lo que complicó el análisis.
+
 Flujo de trabajo:
+
 Siendo mi primer proyecto de este tipo, el flujo de trabajo es algo redundante en algunas partes, con varios scrapers creados para diferentes propósitos.
 
 ### Próximos Pasos ###
 
 Mejorar el dashboard con nuevas visualizaciones y funcionalidades.
+
 Procesar las columnas director y section para incluirlas en el análisis.
+
 Refinar la normalización de nombres de productoras.
+
 Ampliar el análisis a más países o categorías.
