@@ -1,5 +1,5 @@
-#Análisis de Películas del Festival de Cannes (2015-2023)#
-## Tabla de Contenidos##
+# Análisis de Películas del Festival de Cannes (2015-2023) #
+## Tabla de Contenidos ##
 1. [Introducción](#introducción)
 2. [Requisitos Técnicos](#requisitos-técnicos)
 3. [Estructura del Proyecto](#estructura-del-proyecto)
@@ -32,19 +32,31 @@ Archivo Excel Final
 El archivo Excel contiene las siguientes columnas:
 
 year: Año de estreno.
+
 title: Título de la película.
+
 director: Director de la película (columna aún sin procesar).
+
 countries: Países involucrados.
+
 section: Sección en el Festival (actualmente no utilizada).
+
 country_esp_fra_usa: Clasificación por España, Francia y Estados Unidos.
+
 film_wiki_url: URL de Wikipedia de la película.
+
 imdb_id: Código IMDB de la película.
+
 imdb_production_companies: Productoras según IMDB.
+
 productoras_consolidadas: Productoras procesadas.
+
 productoras_consolidadas_normalized: Nombres normalizados de las productoras.
+
 country_expanded: Países adicionales incluidos para análisis.
 
 Notas Importantes
+
 Se han creado varias columnas relacionadas con las productoras para garantizar la precisión de los datos.
 Las columnas director y section todavía no se están utilizando en el análisis.
 Inicialmente, el proyecto se centró en comparar Francia, España y Estados Unidos, pero después se expandió a una docena de países.
@@ -78,11 +90,11 @@ Clonar el repositorio:
 
 bash
 ``` git clone https://github.com/carmenhat/PythonProyectos.git
-cd PythonProyectos/02_web_scraping/scraping_cannes
+cd PythonProyectos/02_web_scraping/scraping_cannes ```
 Instalar dependencias: Asegúrate de tener Python instalado y ejecuta:
 
 bash
-``` pip install -r requirements.txt
+``` pip install -r requirements.txt ```
 Ejecutar el script de scraping:
 
 bash
