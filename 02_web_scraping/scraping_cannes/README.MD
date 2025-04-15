@@ -125,11 +125,11 @@ Instalar dependencias: Asegúrate de tener Python instalado y ejecuta:
 pip install -r requirements.txt 
 ```
 
-Ejecutar el script de scraping:
+Ejecutar el script de scraping: (aún tengo que crear el script final a partir de los 3 scripts que tengo) 
 
 ```bash
 
-python scraping_script.py
+python scraping_script.py 
 ```
 Abrir el dashboard:
 
@@ -161,4 +161,4 @@ Procesar las columnas director y section para incluirlas en el análisis.
 
 Refinar la normalización de nombres de productoras.
 
-Ampliar el análisis a más países o categorías.
+Ampliar el análisis a más países (YA HECHO)  o categorías.
