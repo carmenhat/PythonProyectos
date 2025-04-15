@@ -1,3 +1,6 @@
+ ### scrape_cannes_wikipedia.py, scrape_cannes_wikipedia_con_enlaces.py, scrape_cannes_wikipedia_con_paises.py ###
+
+
 Los tres archivos de código tienen como objetivo principal extraer datos de las páginas de Wikipedia relacionadas con el Festival de Cine de Cannes (2015-2023). Sin embargo, cada uno tiene diferencias en cuanto a funcionalidad y salida. Aquí está el análisis para ayudarte a decidir cuál conservar:
 
 1. Archivo: scrape_cannes_wikipedia_con_enlaces.py
