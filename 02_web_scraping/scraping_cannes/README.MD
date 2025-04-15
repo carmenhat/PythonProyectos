@@ -88,21 +88,28 @@ Crear visualizaciones centradas en España y comparativas más detalladas.
 ### Cómo Usar ###
 Clonar el repositorio:
 
-bash
-``` git clone https://github.com/carmenhat/PythonProyectos.git
-cd PythonProyectos/02_web_scraping/scraping_cannes ```
+```bash
+
+git clone https://github.com/carmenhat/PythonProyectos.git
+cd PythonProyectos/02_web_scraping/scraping_cannes 
+
 Instalar dependencias: Asegúrate de tener Python instalado y ejecuta:
 
-bash
-``` pip install -r requirements.txt ```
+```bash
+
+pip install -r requirements.txt 
+
 Ejecutar el script de scraping:
 
-bash
-``` python scraping_script.py
+```bash
+
+python scraping_script.py
+
 Abrir el dashboard:
 
-bash
-```streamlit run dashboard_cannes_mejorado.py
+```bash
+
+streamlit run dashboard_cannes_mejorado.py
 
 ### Retos y Aprendizajes ###
 
