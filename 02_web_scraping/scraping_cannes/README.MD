@@ -1,22 +1,91 @@
-El  cuaderno recopila películas de las secciones oficiales del Festival de Cannes (2015–2023), identifica si pertenecen a España, Francia o EEUU (he añadido más países), y guarda los datos en un Excel.
-****Notas técnicas****
-He creado un script para scrapear las películas seleccionadas para el Festival de Cannes entre 2015 y 2023 , guardar los resultados en un Excel e incluir columnas que destaquen
-Comencé intentado scrapear la página del Festival pero no había mucha información. Me fui entonces a la wikipedia, recogí bastantes datos allí, pero no todas las películas tenían info. 
-Entonces lo completé con la página de IMDB, primero obtuve el código IMDB de cada película. 
-Se me ocurrió también averiguar las productoras de cada película para intentar hacer un top (solamente de los países destacados)
-Primero la idea era hacer una comparativa entre Francia (país anfitrión), España (mi país) y USA , pero se quedaba un poco corto y decidí ampliar a una docena de países (buscando en general los que habían tenido más participación)
-Con los cambios de idea, ampliaciones de proyecto y ser mi primera vez, el flujo de trabajo es un poco lioso (por ejemplo, he creado varios scrapers que a lo mejor son un poco redundantes): primero scrapeando wikipedia, creando un excel y sobre ese excel intentar enriquecerlo con nuevos scrapeos.
-Por otro lado, soy consciente de que podía haber usado APIs de IMDB (encontré varias) pero quería esta vez practicar cómo se obtiene información de una web (y tanto wikipedia como IMDB son fáciles)
-Otro problema que tuve fue que los nombres de las productoras no estaban normalizados (había muchísimas variantes para cada productora) 
+Análisis de Películas del Festival de Cannes (2015-2023)
+Introducción
+Este proyecto recopila información sobre las películas de las secciones oficiales del Festival de Cannes (2015–2023). El objetivo es identificar si las películas pertenecen a España, Francia, Estados Unidos u otros países destacados, y almacenar los datos en un archivo Excel para su análisis.
 
-El archivo .xlsx definitivo tiene las siguientes columnas: el nombre provisional e s
-year,	title,	director,	countries,	section,	country_esp_fra_usa,	 film_wiki_url,	imdb_id, 	imdb_production_companies,	productoras_consolidadas,	productoras_consolidadas_normalized	country_expanded
-hay 3 columnas para productoras hasta que esté segura de que todo va bien con la definitiva
-Aún no he hecho nada con la columna de director . Y la de sección me sobra de momento , era para cuando iba a hacer comparativa entre oficiales y no oficiales
-Mantengo las dos columnas de países seleccionados por si acaso 
+El trabajo incluye:
 
-visualizaciones: dashboard y alguna cosilla más
-He creado un dashboard con toda la información recopilada (usando streamlit): nombre provisional dashboard_cannes_mejorado
-me falta añadir bastantes cosas a ese dashboard o crear uno nuevo: principalmente quiero centrarme en España y hacer comparativas
+Extracción de datos desde Wikipedia e IMDB.
+Identificación de las productoras involucradas en cada película.
+Creación de un dashboard interactivo con la información recopilada, utilizando Streamlit.
+Este proyecto tiene un enfoque educativo y práctico, ya que se desarrolló para practicar técnicas de scraping y organización de datos.
 
+Requisitos Técnicos
+Lenguajes utilizados: Python (para scraping y procesamiento de datos).
+Herramientas:
+Scraping: Wikipedia e IMDB.
+Visualización: Streamlit.
+Almacenamiento: Archivo Excel (.xlsx).
+APIs: Aunque se podrían haber utilizado APIs, el propósito fue practicar scraping manual.
+Estructura del Proyecto
+Archivo Excel Final
+El archivo Excel contiene las siguientes columnas:
 
+year: Año de estreno.
+title: Título de la película.
+director: Director de la película (columna aún sin procesar).
+countries: Países involucrados.
+section: Sección en el Festival (actualmente no utilizada).
+country_esp_fra_usa: Clasificación por España, Francia y Estados Unidos.
+film_wiki_url: URL de Wikipedia de la película.
+imdb_id: Código IMDB de la película.
+imdb_production_companies: Productoras según IMDB.
+productoras_consolidadas: Productoras procesadas.
+productoras_consolidadas_normalized: Nombres normalizados de las productoras.
+country_expanded: Países adicionales incluidos para análisis.
+Notas Importantes
+Se han creado varias columnas relacionadas con las productoras para garantizar la precisión de los datos.
+Las columnas director y section todavía no se están utilizando en el análisis.
+Inicialmente, el proyecto se centró en comparar Francia, España y Estados Unidos, pero después se expandió a una docena de países.
+Flujo de Trabajo
+El flujo de trabajo incluye:
+
+Scraping:
+Extracción inicial desde la página oficial del Festival (limitada información encontrada).
+Recolección de datos desde Wikipedia (datos incompletos).
+Complementación de datos con IMDB (obteniendo los códigos IMDB de las películas).
+Procesamiento:
+Normalización de nombres de productoras (problemas con variantes de escritura).
+Consolidación de datos en un archivo Excel.
+Visualización:
+Creación de un dashboard interactivo con Streamlit.
+Enfoque principal en España y comparativas internacionales.
+Visualizaciones
+Se ha desarrollado un dashboard interactivo utilizando Streamlit, con el nombre provisional dashboard_cannes_mejorado. Este incluye:
+
+Información recopilada de las películas.
+Comparativas iniciales entre los países destacados.
+Tareas pendientes:
+
+Añadir más funcionalidades al dashboard.
+Crear visualizaciones centradas en España y comparativas más detalladas.
+Cómo Usar
+Clonar el repositorio:
+
+bash
+git clone https://github.com/carmenhat/PythonProyectos.git
+cd PythonProyectos/02_web_scraping/scraping_cannes
+Instalar dependencias: Asegúrate de tener Python instalado y ejecuta:
+
+bash
+pip install -r requirements.txt
+Ejecutar el script de scraping:
+
+bash
+python scraping_script.py
+Abrir el dashboard:
+
+bash
+streamlit run dashboard_cannes_mejorado.py
+Retos y Aprendizajes
+Scraping:
+Wikipedia e IMDB fueron fuentes clave, pero no todas las películas incluían información completa.
+Decidí practicar scraping manual en lugar de usar APIs para reforzar habilidades.
+Normalización:
+Los nombres de las productoras presentaron muchas variantes, lo que complicó el análisis.
+Flujo de trabajo:
+Siendo mi primer proyecto de este tipo, el flujo de trabajo es algo redundante en algunas partes, con varios scrapers creados para diferentes propósitos.
+Próximos Pasos
+Mejorar el dashboard con nuevas visualizaciones y funcionalidades.
+Procesar las columnas director y section para incluirlas en el análisis.
+Refinar la normalización de nombres de productoras.
+Ampliar el análisis a más países o categorías.
