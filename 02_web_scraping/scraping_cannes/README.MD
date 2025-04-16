@@ -118,18 +118,22 @@ git clone https://github.com/carmenhat/PythonProyectos.git
 cd PythonProyectos/02_web_scraping/scraping_cannes 
 ```
 
-Instalar dependencias: Asegúrate de tener Python instalado y ejecuta:
+# Instalar dependencias: Asegúrate de tener Python instalado y ejecuta:
 
 ```bash
 
 pip install -r requirements.txt 
+ ###### ó pip install pandas requests beautifulsoup4 rapidfuzz openpyxl tqdm
+
 ```
 
-Ejecutar el script de scraping: (aún tengo que crear el script final a partir de los 3 scripts que tengo) 
 
 ```bash
 
-python scraping_script.py 
+# Ejecutar flujo
+python scripts/1_scrape_wikipedia.py
+python scripts/2_enrich_imdb.py
+python scripts/3_enrich_countries.py
 ```
 Abrir el dashboard:
 
@@ -157,8 +161,8 @@ Siendo mi primer proyecto de este tipo, el flujo de trabajo es algo redundante e
 
 Mejorar el dashboard con nuevas visualizaciones y funcionalidades.
 
-Procesar las columnas director y section para incluirlas en el análisis.
+Corregir películas sin país para los cálculos (estoy en ello)
 
-Refinar la normalización de nombres de productoras.
+Procesar las columnas director y section para incluirlas en el análisis.
 
 Ampliar el análisis a más países (YA HECHO)  o categorías.
