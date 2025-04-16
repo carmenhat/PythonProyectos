@@ -64,7 +64,7 @@ for year in YEARS:
                 if "country" in h and i < len(cols):
                     countries = cols[i].get_text(strip=True)
 
-            # Verificamos si el país pertenece a España, Francia o USA
+            # Verificamos si el país pertenece a España, Francia o USA (habría que expandir lista de países)
             country_flag = ""
             if any(country in countries for country in ['Spain', 'España']):
                 country_flag = '🇪🇸 Spain'
