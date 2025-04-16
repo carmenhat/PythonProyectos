@@ -3,9 +3,9 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import time
 # creando un script para extraer los datos de las productoras de las películas de la sección oficial del festival de cannes
-# de los años 2015 a 2023
+# de los años 2015 a 2023 de la wikipedia (parece que en 2024 no encuentro datos)
 # Importar las librerías necesarias
-# crea el excel cannes_seccion_oficial_wiki_con_paises_y_enlaces_y_productoras.xlsx
+# crea el excel cannes_base.xlsx
 
 YEARS = list(range(2015, 2024))
 BASE_WIKI_URL = "https://en.wikipedia.org/wiki/{}"
@@ -17,7 +17,7 @@ HEADERS = {
 
 # Lista de países que nos interesa identificar
 COUNTRIES_LIST = ['Spain', 'España', 'France', 'Francia', 'United States', 'USA', 'Estados Unidos']
-
+# falta añadir el resto de países que me interesaban también (y que pensé después)
 data = []
 
 for year in YEARS:
@@ -100,5 +100,5 @@ for year in YEARS:
     time.sleep(1)
 
 films_df = pd.DataFrame(data)
-films_df.to_excel("datos_generados/cannes_seccion_oficial_wiki_con_paises_y_enlaces_y_productoras.xlsx", index=False)
-print("\n✅ Datos guardados en 'datos_generados/cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx'")
+films_df.to_excel("datos_generados/cannes_base.xlsx", index=False)
+print("\n✅ Datos guardados en 'datos_generados/cannes_base.xlsx'")
