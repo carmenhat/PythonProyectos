@@ -14,7 +14,7 @@
 
 **4. dashboard_cannes_mejorado**
 (que también podría renombrar una vez funcione todo)
-
+genera mi visualización con streamlit 
 
 
 
