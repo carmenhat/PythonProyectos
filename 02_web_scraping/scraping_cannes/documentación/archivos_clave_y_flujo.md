@@ -1,15 +1,26 @@
 Archivos Clave
 
-scrapear_para_productoras.py: Extracción inicial de datos de Wikipedia.
+scrapear_para_productoras.py: Extracción inicial de datos de Wikipedia
 
-nuevo_intento_productoras.py: Enriquecimiento con productoras desde Wikipedia.
+(renombrar a  scrape_wikipedia cuando todo funcione)
+genera excel cannes_base
 
-extraer_productoras_imdb.py: Obtención de productoras desde IMDb (limitado).
+updated-imdb-scraper.py: Versión mejorada de extracción de IMDb
 
-updated-imdb-scraper.py: Versión mejorada de extracción de IMDb.
+renombrar a enrich_imdb 
+genera cannes_con_imdb
 
-scrape_cannes_wikipedia.py
+cannes_country_enricher: añade los datos de países ampliados
 
-scrape_cannes_wikipedia_con_enlaces.py
+renombrar a enrich_countries (o cannes_final)
+genera cannes_final
 
-scrape_cannes_wikipedia_con_paises.py
+y para crear el dashboard se usa :
+
+dashboard_cannes_mejorado
+
+(que también podría renombrar una vez funcione todo)
+
+
+
+
