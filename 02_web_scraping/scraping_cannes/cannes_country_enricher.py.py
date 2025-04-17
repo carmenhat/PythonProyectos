@@ -243,10 +243,10 @@ def main():
         script_dir = os.path.dirname(os.path.abspath(__file__))
 
         # Definir rutas relativas basadas en el directorio del script
-        input_file = os.path.join(script_dir, "datos_generados/cannes_con_productoras_normalizadas.xlsx")
-        output_file = os.path.join(script_dir, "datos_generados/cannes_con_paises_expandidos.xlsx")
+        input_file = os.path.join(script_dir, "datos_generados/cannes_con_imdb.xlsx")
+        output_file = os.path.join(script_dir, "datos_generados/cannes_final.xlsx")
 
-        # Enriquecer los datos
+        # Enriquecer los datos de países
         enrich_countries(input_file, output_file)
         
     except Exception as e:

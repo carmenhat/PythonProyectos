@@ -37,10 +37,10 @@ def count_countries(df, country_column):
 # Cargar datos
 @st.cache_data
 def load_data():
-    # Intentar cargar el archivo con datos expandidos, si no existe usar el anterior
+    # Intentar cargar el archivo con datos expandidos, si no existe usar el anterior (por si aún tengo errores)
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    expanded_file = os.path.join(script_dir, "datos_generados/cannes_con_paises_expandidos.xlsx")
-    original_file = os.path.join(script_dir, "datos_generados/cannes_con_productoras_normalizadas.xlsx")
+    expanded_file = os.path.join(script_dir, "datos_generados/cannes_final.xlsx")
+    original_file = os.path.join(script_dir, "datos_generados/cannes_con_imdb.xlsx")
     
     if os.path.exists(expanded_file):
         file_path = expanded_file
@@ -347,7 +347,7 @@ with tab4:
     if 'section' in filtered_df.columns:
         display_columns.insert(3, 'section')
     
-    # Añadir productoras si están disponibles
+    # Añadir productoras si están disponibles (por si la estoy liando al ir cambiando los excel)
     if 'productoras_consolidadas_normalized' in filtered_df.columns:
         display_columns.append('productoras_consolidadas_normalized')
     
@@ -367,4 +367,4 @@ with tab4:
 
 # Footer
 st.markdown("---")
-st.caption("Datos extraídos de IMDb y otras fuentes. Análisis de películas en competición del Festival de Cannes.")
+st.caption("Datos extraídos de IMDb y Wikipedia. Análisis de películas en competición del Festival de Cannes.")

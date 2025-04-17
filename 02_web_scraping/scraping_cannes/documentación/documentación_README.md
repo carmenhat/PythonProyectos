@@ -1,6 +1,6 @@
 # Proyecto de Scraping - Festival de Cannes 🎥
 
-Este proyecto está diseñado para recopilar información sobre las películas de las secciones oficiales y no oficiales del Festival de Cannes, identificando países destacados como España, Francia y Estados Unidos, y generando datasets listos para análisis.
+Este proyecto está diseñado para recopilar información sobre las películas de las secciones oficiales  del Festival de Cannes, identificando países destacados como España, Francia y Estados Unidos, y generando datasets listos para análisis.
 
 ## Estructura del Proyecto
 
@@ -11,7 +11,8 @@ Este proyecto está diseñado para recopilar información sobre las películas d
 
 - **`scripts_finalizados/`**: Scripts funcionales y completos.
   - `productoras.py`: Genera un notebook para analizar productoras por país.
-  - `nuevo_intento_productoras.py`: Busca productoras en Wikipedia y actualiza un Excel.
+  - poner lista aquí del flujo que he escrito antes , cuando lo tenga todo funcionando
+  - ``: Busca productoras en Wikipedia y actualiza un Excel.
 
 - **`scripts_incompletos/`**: Scripts en desarrollo o con problemas.
   - `no_vale_scrape_cannes_no_oficiales.py`: Intenta scrapear secciones no oficiales usando una API, pero requiere revisión.

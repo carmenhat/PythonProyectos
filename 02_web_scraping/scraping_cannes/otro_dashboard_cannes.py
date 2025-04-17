@@ -4,9 +4,9 @@ import streamlit as st
 import os
 from collections import Counter
 
-# Obtener la ruta del directorio donde está el script
+# Obtener la ruta del directorio donde está el script (tengo que mirar si podría usar aquí cannes_final, seguramente sí)
 script_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(script_dir, "datos_generados/cannes_con_productoras_normalizadas.xlsx")
+file_path = os.path.join(script_dir, "datos_generados/cannes_con_imdb.xlsx")
 
 # Cargar el archivo Excel
 df = pd.read_excel(file_path)
