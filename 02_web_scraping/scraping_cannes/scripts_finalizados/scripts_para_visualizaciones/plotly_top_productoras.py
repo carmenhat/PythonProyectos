@@ -8,11 +8,16 @@ from pathlib import Path
 # Importar los datos
 # Cambia la ruta del archivo según sea necesario
 
-
-file_path = Path("datos_generados/datos_generados/cannes_oficial_wiki_con_productoras.xlsx")
+# Definir la ruta relativa para el archivo de datos
+relative_path = Path("..") / "datos_generados" / "cannes_oficial_wiki_con_productoras.xlsx"
+file_path = Path(__file__).parent.parent.parent / "datos_generados" / "cannes_oficial_wiki_con_productoras.xlsx"
 print(f"Ruta del archivo: {file_path.resolve()}")
 
-df = pd.read_excel("datos_generados//home/carmen/Documentos/repositorio_python/PythonProyectos/02_web_scraping/scraping_cannes/cannes_oficial_wiki_con_productoras.xlsx")
+# Ensure the file exists before reading
+if not file_path.exists():
+    raise FileNotFoundError(f"El archivo no se encuentra en la ruta especificada: {file_path.resolve()}")
+
+df = pd.read_excel(file_path)
 
 # Filtrar y preparar los datos
 df = df[df["productoras"].notna() & df["country_esp_fra_usa"].notna()].copy()
@@ -54,5 +59,8 @@ fig = px.bar(
 
 fig.update_layout(template="plotly_white", yaxis={"categoryorder": "total ascending"})
 fig.show()
-fig.write_html("visualizaciones/top_productoras.html")
+# Ensure the directory exists before saving the file
+output_dir = Path("visualizaciones")
+output_dir.mkdir(parents=True, exist_ok=True)
+fig.write_html(output_dir / "top_productoras.html")
 print("✅ Gráfico guardado como 'visualizaciones/top_productoras.html'")

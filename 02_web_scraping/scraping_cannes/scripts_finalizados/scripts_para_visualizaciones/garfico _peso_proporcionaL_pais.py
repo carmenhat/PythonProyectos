@@ -2,9 +2,13 @@ import pandas as pd
 import plotly.express as px
 import os
 
-# Obtener la ruta del directorio donde está el script
-script_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(script_dir, "datos_generados/cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx")
+# Obtener la ruta del directorio base del proyecto
+base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+file_path = os.path.join(base_dir, "datos_generados/cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx")
+
+# Verificar si el archivo existe
+if not os.path.exists(file_path):
+    raise FileNotFoundError(f"El archivo no se encontró en la ruta especificada: {file_path}")
 
 # Cargar el Excel
 df = pd.read_excel(file_path)
@@ -44,6 +48,7 @@ fig = px.area(
     groupnorm="percent"
 )
 
+
 fig.update_layout(
     title_font_size=20,
     yaxis_title="Porcentaje (%)",
@@ -52,4 +57,4 @@ fig.update_layout(
 )
 
 fig.show()
-fig.write_image("visualizaciones/grafico_peso_proporcional_pais.png")
+fig.write_image("visualizaciones/grafico_peso_proporcional_3paises.png")
