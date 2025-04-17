@@ -246,7 +246,7 @@ def main():
         input_file = os.path.join(script_dir, "datos_generados/cannes_con_imdb.xlsx")
         output_file = os.path.join(script_dir, "datos_generados/cannes_final.xlsx")
 
-        # Enriquecer los datos
+        # Enriquecer los datos de países
         enrich_countries(input_file, output_file)
         
     except Exception as e:

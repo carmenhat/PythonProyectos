@@ -100,5 +100,5 @@ for year in YEARS:
     time.sleep(1)
 
 films_df = pd.DataFrame(data)
-films_df.to_excel("datos_generados/cannes_base.xlsx", index=False)
-print("\n✅ Datos guardados en 'datos_generados/cannes_base.xlsx'")
+films_df.to_excel("../datos_generados/cannes_base.xlsx", index=False)
+print("\n✅ Datos guardados en '../datos_generados/cannes_base.xlsx'")
