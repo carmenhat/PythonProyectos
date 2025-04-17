@@ -2,7 +2,7 @@ from pathlib import Path
 
 # Este script busca las productoras de las películas en Wikipedia
 # y las añade a un archivo Excel existente con la información de Cannes.
-# Asegúrate de tener el archivo "datos_generados/cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx" en la misma carpeta que este script
+# Asegúrate de tener el archivo "datos_generados/cannes_wiki.xlsx" en la misma carpeta que este script
 # o proporciona la ruta correcta al archivo.
 # Este archivo debe contener las columnas "film_wiki_url" y "title".
 # Si no tienes el archivo, puedes generarlo ejecutando el script "scrapear_para_productoras.py".
@@ -19,7 +19,16 @@ from bs4 import BeautifulSoup
 import time
 
 # Cargar el archivo anterior
-df = pd.read_excel("datos_generados/cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx")
+# Construir la ruta correcta a la carpeta datos_generados
+input_dir = Path(__file__).parent.parent / "datos_generados"
+input_file = input_dir / "cannes_wiki.xlsx"
+
+# Verificar si el archivo existe
+if not input_file.exists():
+    raise FileNotFoundError(f"El archivo '{input_file.resolve()}' no existe. Asegúrate de generarlo primero.")
+
+# Cargar el archivo Excel
+df = pd.read_excel(input_file)
 
 productoras = []
 
@@ -57,8 +66,13 @@ for i, row in df.iterrows():
 df["productoras"] = productoras
 
 # Guardar resultado
-df.to_excel("datos_generados/datos_generados/cannes_oficial_wiki_con_productoras.xlsx", index=False)
-print("✅ Archivo actualizado con productoras guardado como 'datos_generados/datos_generados/cannes_oficial_wiki_con_productoras.xlsx'")
+# Crear el directorio si no existe
+output_dir = Path("datos_generados")
+output_dir.mkdir(parents=True, exist_ok=True)
+
+# Guardar el archivo Excel
+df.to_excel(output_dir / "cannes_wiki_enriquecido.xlsx", index=False)
+print(f"✅ Archivo actualizado con productoras guardado como '{output_dir / 'cannes_wiki_enriquecido.xlsx'}'")
 
 
 

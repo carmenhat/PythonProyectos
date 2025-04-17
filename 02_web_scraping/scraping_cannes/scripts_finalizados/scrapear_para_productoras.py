@@ -5,7 +5,7 @@ import time
 # creando un script para extraer los datos de las productoras de las películas de la sección oficial del festival de cannes
 # de los años 2015 a 2023
 # Importar las librerías necesarias
-# crea el excel cannes_seccion_oficial_wiki_con_paises_y_enlaces_y_productoras.xlsx
+# crea el excel cannes_wiki.xlsx
 
 YEARS = list(range(2015, 2024))
 BASE_WIKI_URL = "https://en.wikipedia.org/wiki/{}"
@@ -100,5 +100,13 @@ for year in YEARS:
     time.sleep(1)
 
 films_df = pd.DataFrame(data)
-films_df.to_excel("datos_generados/cannes_seccion_oficial_wiki_con_paises_y_enlaces_y_productoras.xlsx", index=False)
-print("\n✅ Datos guardados en 'datos_generados/cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx'")
+from pathlib import Path
+
+# Construir la ruta correcta a la carpeta datos_generados
+output_dir = Path(__file__).parent.parent / "datos_generados"
+output_dir.mkdir(parents=True, exist_ok=True)
+
+# Guardar el archivo Excel
+output_file = output_dir / "cannes_wiki.xlsx"
+films_df.to_excel(output_file, index=False)
+print(f"\n✅ Datos guardados en '{output_file.resolve()}'")

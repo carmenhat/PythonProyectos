@@ -1,4 +1,3 @@
-
 # nueva prueba para extraer productoras de IMDb
 # funcionó a medias, fallaron muchas películas: crée el nuevo script updated-imdb-scraper.py 
 
@@ -8,6 +7,7 @@ import pandas as pd
 import time
 import re
 from urllib.parse import quote
+from pathlib import Path  
 
 # Constantes
 HEADERS = {
@@ -129,30 +129,31 @@ def main():
     """Función principal que procesa el Excel de Cannes y enriquece con datos de IMDb."""
     try:
         # Cargar el archivo Excel existente
-        df = pd.read_excel("datos_generados/cannes_seccion_oficial_wiki_con_paises_y_enlaces.xlsx")
-        
-        # Añadir columnas para IMDb
+        input_file = Path(__file__).parent.parent / "datos_generados" / "cannes_wiki_enriquecido.xlsx"
+        df = pd.read_excel(input_file)
+
+        # Añadir columnas para IMDb si no existen
         if "imdb_id" not in df.columns:
             df["imdb_id"] = None
         if "imdb_production_companies" not in df.columns:
             df["imdb_production_companies"] = None
-        
+
         # Procesar cada película
         for i, row in df.iterrows():
             print(f"\n📽️ Procesando {row['title']} ({row['year']})...")
-            
+
             # Solo buscar películas sin ID de IMDb
             if pd.isna(df.at[i, "imdb_id"]) or df.at[i, "imdb_id"] == "":
                 # Buscar ID de IMDb
                 imdb_id = search_imdb_id(row["title"], row["year"])
-                
+
                 if imdb_id:
                     print(f"✅ ID de IMDb encontrado: {imdb_id}")
                     df.at[i, "imdb_id"] = imdb_id
-                    
+
                     # Obtener productoras
                     companies = scrape_imdb_for_production_companies(imdb_id)
-                    
+
                     if companies:
                         companies_str = ", ".join(companies)
                         print(f"🏢 Productoras: {companies_str}")
@@ -161,14 +162,18 @@ def main():
                         print("❌ No se encontraron productoras")
                 else:
                     print("❌ No se encontró ID de IMDb")
-            
+
             # Esperar para no sobrecargar el servidor
             time.sleep(2)
-        
+
         # Guardar resultados
-        df.to_excel("datos_generados/cannes_con_productoras_imdb.xlsx", index=False)
-        print("\n✅ Datos guardados en 'datos_generados/cannes_con_productoras_imdb.xlsx'")
-        
+        output_dir = Path(__file__).parent.parent / "datos_generados"
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        output_file = output_dir / "cannes_y_productoras_imdb.xlsx"
+        df.to_excel(output_file, index=False)
+        print(f"\n✅ Datos guardados en '{output_file.resolve()}'")
+
     except Exception as e:
         print(f"Error en el procesamiento: {e}")
 
