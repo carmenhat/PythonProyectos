@@ -36,7 +36,7 @@ APIs: Aunque se podrían haber utilizado APIs, el propósito fue practicar scrap
 
 ### Estructura del Proyecto ###
 
-Archivo Excel Final:
+Archivo Excel Final: cannes_dataset_unificado.xlsx
 
 El archivo Excel contiene las siguientes columnas:
 
@@ -86,7 +86,7 @@ Procesamiento:
 
 Normalización de nombres de productoras (problemas con variantes de escritura).
 
-Consolidación de datos en un archivo Excel.
+Consolidación de datos en un archivo Excel: cannes_dataset_unificado.xlsx
 
 Visualización:
 
@@ -122,14 +122,15 @@ Instalar dependencias: Asegúrate de tener Python instalado y ejecuta:
 
 ```bash
 
-pip install -r requirements.txt 
+pip install -r requirements-2.txt 
+
 ```
 
 Ejecutar el script de scraping: (aún tengo que crear el script final a partir de los 3 scripts que tengo) 
 
 ```bash
 
-python scraping_script.py 
+python scraping_script.py (el unificado)
 ```
 Abrir el dashboard:
 
@@ -162,3 +163,8 @@ Procesar las columnas director y section para incluirlas en el análisis.
 Refinar la normalización de nombres de productoras.
 
 Ampliar el análisis a más países (YA HECHO)  o categorías.
+
+corregir fallos en el dashboard: productoras sin paises, columna de director, etc
+añadir comparativa ESpaña en dashboard
+traducir al inglés
+reusar partes del script para ver pelis premiadas y sacar estadísticas
