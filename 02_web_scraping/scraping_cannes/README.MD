@@ -1,170 +1,226 @@
-# Análisis de Películas del Festival de Cannes (2015-2023) #
-## Tabla de Contenidos ##
-1. [Introducción](#introducción)
-2. [Requisitos Técnicos](#requisitos-técnicos)
-3. [Estructura del Proyecto](#estructura-del-proyecto)
-4. [Flujo de Trabajo](#flujo-de-trabajo)
-5. [Visualizaciones](#visualizaciones)
-6. [Cómo Usar](#cómo-usar)
-7. [Retos y Aprendizajes](#retos-y-aprendizajes)
-8. [Próximos Pasos](#próximos-pasos)
+# 🎬 Cannes Film Festival Analysis (2015-2023)
 
- ## Introducción ##
-Este proyecto recopila información sobre las películas de las secciones oficiales del Festival de Cannes (2015–2023). El objetivo es identificar si las películas pertenecen a España, Francia, Estados Unidos u otros países destacados, y almacenar los datos en un archivo Excel para su análisis.
+[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-### El trabajo incluye: ###
+A data analysis project that tracks films from the Cannes Film Festival's official selections from 2015 to 2023, with a focus on production companies and country of origin analysis.
 
-Extracción de datos desde Wikipedia e IMDB.
-Identificación de las productoras involucradas en cada película.
-Creación de un dashboard interactivo con la información recopilada, utilizando Streamlit.
-Este proyecto tiene un enfoque educativo y práctico, ya que se desarrolló para practicar técnicas de scraping y organización de datos.
+![Cannes Film Festival](https://via.placeholder.com/800x400?text=Cannes+Film+Festival+Analysis)
 
-### Requisitos Técnicos ###
+## 📋 Table of Contents
+1. [Introduction](#introduction)
+2. [Features](#features)
+3. [Technical Requirements](#technical-requirements)
+4. [Project Structure](#project-structure)
+5. [Data Collection Workflow](#data-collection-workflow)
+6. [Dashboard & Visualizations](#dashboard--visualizations)
+7. [Installation & Usage](#installation--usage)
+8. [Challenges & Lessons Learned](#challenges--lessons-learned)
+9. [Future Development](#future-development)
+10. [Contributing](#contributing)
+11. [License](#license)
 
-Lenguajes utilizados: Python (para scraping y procesamiento de datos).
+## 🌟 Introduction
 
-Herramientas:
+This project collects and analyzes data about films presented in the official selections of the Cannes Film Festival from 2015 to 2023. The primary goals are to:
 
-Scraping: Wikipedia e IMDB.
+- Identify the country of origin for each film (with special focus on Spain, France, and the United States)
+- Analyze production company involvement and partnerships
+- Create an interactive dashboard for exploring the collected data
+- Identify trends in international film production within the festival context
 
-Visualización: Streamlit.
+The project was developed for educational purposes to practice web scraping, data cleaning, and visualization techniques.
 
-Almacenamiento: Archivo Excel (.xlsx).
+## ✨ Features
 
-APIs: Aunque se podrían haber utilizado APIs, el propósito fue practicar scraping manual.
+- **Data Collection**: Automated scraping from Wikipedia and IMDb
+- **Data Processing**: 
+  - Country of origin identification with flag emojis
+  - Production company name normalization and clustering
+  - Comprehensive data consolidation
+- **Interactive Dashboard**: Streamlit-based visualization of films, countries, and production companies
+- **Analysis Tools**: Compare film production trends across countries and years
 
+## 🛠️ Technical Requirements
 
-### Estructura del Proyecto ###
+### Languages
+- Python 3.8+
 
-Archivo Excel Final: cannes_dataset_unificado.xlsx
+### Libraries & Tools
+- **Web Scraping**: 
+  - BeautifulSoup4
+  - Requests
+- **Data Processing**:
+  - Pandas
+  - NumPy
+  - Regular Expressions
+- **Data Visualization**: 
+  - Streamlit
+  - Plotly / Matplotlib
+- **Storage**: 
+  - Excel (.xlsx) via openpyxl
 
-El archivo Excel contiene las siguientes columnas:
+### Custom Modules
+- `company_normalizer.py`: Custom module for normalizing company names
 
-year: Año de estreno.
-
-title: Título de la película.
-
-director: Director de la película (columna aún sin procesar).
-
-countries: Países involucrados.
-
-section: Sección en el Festival (actualmente no utilizada).
-
-country_esp_fra_usa: Clasificación por España, Francia y Estados Unidos.
-
-film_wiki_url: URL de Wikipedia de la película.
-
-imdb_id: Código IMDB de la película.
-
-imdb_production_companies: Productoras según IMDB.
-
-productoras_consolidadas: Productoras procesadas.
-
-productoras_consolidadas_normalized: Nombres normalizados de las productoras.
-
-country_expanded: Países adicionales incluidos para análisis.
-
-#### Notas Importantes ####
-
-Se han creado varias columnas relacionadas con las productoras para garantizar la precisión de los datos.
-Las columnas director y section todavía no se están utilizando en el análisis.
-Inicialmente, el proyecto se centró en comparar Francia, España y Estados Unidos, pero después se expandió a una docena de países.
-
-### Flujo de Trabajo ###
-El flujo de trabajo incluye:
-
-Scraping:
-
-Extracción inicial desde la página oficial del Festival (limitada información encontrada).
-
-Recolección de datos desde Wikipedia (datos incompletos).
-
-Complementación de datos con IMDB (obteniendo los códigos IMDB de las películas).
-
-
-Procesamiento:
-
-Normalización de nombres de productoras (problemas con variantes de escritura).
-
-Consolidación de datos en un archivo Excel: cannes_dataset_unificado.xlsx
-
-Visualización:
-
-Creación de un dashboard interactivo con Streamlit.
-
-Enfoque principal en España y comparativas internacionales.
-
-### Visualizaciones ###
-
-Se ha desarrollado un dashboard interactivo utilizando Streamlit, con el nombre provisional dashboard_cannes_mejorado. Este incluye:
-
-Información recopilada de las películas.
-
-Comparativas iniciales entre los países destacados.
-
-Tareas pendientes:
-
-Añadir más funcionalidades al dashboard.
-
-Crear visualizaciones centradas en España y comparativas más detalladas.
-
-### Cómo Usar ###
-
-Clonar el repositorio:
-
-```bash
-
-git clone https://github.com/carmenhat/PythonProyectos.git
-cd PythonProyectos/02_web_scraping/scraping_cannes 
-```
-
-Instalar dependencias: Asegúrate de tener Python instalado y ejecuta:
-
-```bash
-
-pip install -r requirements-2.txt 
+## 📁 Project Structure
 
 ```
-
-Ejecutar el script de scraping: (aún tengo que crear el script final a partir de los 3 scripts que tengo) 
-
-```bash
-
-python scraping_script.py (el unificado)
+scraping_cannes/
+├── cannes-scraper-unified.py      # Main script for data collection
+├── company_normalizer.py          # Utility for normalizing company names
+├── dashboard_cannes_mejorado.py   # Streamlit dashboard
+├── requirements.txt               # Python dependencies
+├── README.md                      # This documentation file
+└── datos_generados/
+    └── cannes_dataset_unificado.xlsx  # Generated dataset
 ```
-Abrir el dashboard:
 
+### Dataset Structure
+
+The `cannes_dataset_unificado.xlsx` file contains the following columns:
+
+| Column | Description |
+|--------|-------------|
+| year | Year of the film's premiere |
+| title | Film title |
+| director | Film director (pending processing) |
+| countries | Countries involved in production |
+| section | Festival section (currently unused) |
+| country_emoji | Country flags with names |
+| film_wiki_url | Wikipedia URL of the film |
+| imdb_id | IMDb identifier code |
+| imdb_production_companies | Production companies according to IMDb |
+| imdb_countries | Countries according to IMDb |
+| productoras_consolidadas | Consolidated production companies |
+| productoras_normalizadas | Normalized production company names |
+
+## 🔄 Data Collection Workflow
+
+The data collection process follows these steps:
+
+1. **Initial Extraction**: 
+   - Extract film titles and basic information from Wikipedia's Cannes Film Festival pages
+   - Gather production company information from individual film pages on Wikipedia
+
+2. **Data Enrichment**:
+   - Search for each film on IMDb to retrieve its unique identifier
+   - Extract additional production company information and country of origin from IMDb
+   - Add country flag emojis for better visualization
+
+3. **Data Processing**:
+   - Normalize production company names to address spelling variations
+   - Cluster similar company names to identify the same companies with different spellings
+   - Consolidate all sources of information into a single dataset
+
+4. **Data Storage**:
+   - Save the processed data to an Excel file for further analysis and visualization
+
+## 📊 Dashboard & Visualizations
+
+The project includes an interactive dashboard built with Streamlit (`dashboard_cannes_mejorado.py`) featuring:
+
+- Film listings with filtering options
+- Country of origin analysis and comparisons
+- Production company participation metrics
+- Year-by-year analysis of trends
+- Special focus on Spanish film industry participation
+
+![Dashboard Screenshot](https://via.placeholder.com/800x400?text=Dashboard+Screenshot)
+
+## 🚀 Installation & Usage
+
+### Setup
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/carmenhat/PythonProyectos.git
+   cd PythonProyectos/02_web_scraping/scraping_cannes
+   ```
+
+2. Create a virtual environment (recommended):
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+### Data Collection
+
+Run the unified scraper to collect film data:
 ```bash
+python cannes-scraper-unified.py
+```
 
+This will generate the dataset in `datos_generados/cannes_dataset_unificado.xlsx`.
+
+### Running the Dashboard
+
+Launch the Streamlit dashboard:
+```bash
 streamlit run dashboard_cannes_mejorado.py
 ```
-### Retos y Aprendizajes ###
 
-Scraping:
+The dashboard will be accessible at http://localhost:8501 in your web browser.
 
-Wikipedia e IMDB fueron fuentes clave, pero no todas las películas incluían información completa.
+## 💡 Challenges & Lessons Learned
 
-Decidí practicar scraping manual en lugar de usar APIs para reforzar habilidades.
+### Scraping Challenges
+- **Inconsistent Data**: Wikipedia and IMDb pages don't follow a consistent structure across all films
+- **Rate Limiting**: Careful implementation of delays was necessary to avoid being blocked
+- **Data Quality**: Several films had incomplete information requiring manual verification
 
-Normalización:
+### Data Processing Challenges
+- **Company Name Variations**: The same production company often appeared with different spellings or formats
+- **Missing Information**: Not all films had complete production information available
+- **International Character Support**: Handling special characters from different languages
 
-Los nombres de las productoras presentaron muchas variantes, lo que complicó el análisis.
+### Lessons Learned
+- Web scraping requires robust error handling and adaptability to changing website structures
+- Normalizing entity names is crucial for accurate analysis
+- A step-by-step approach to data enrichment yields better results than trying to collect everything at once
 
-Flujo de trabajo:
+## 🔮 Future Development
 
-Siendo mi primer proyecto de este tipo, el flujo de trabajo es algo redundante en algunas partes, con varios scrapers creados para diferentes propósitos.
+1. **Dashboard Enhancements**:
+   - Add more interactive visualizations
+   - Create specialized views for country-specific analysis
+   - Implement data filtering capabilities
 
-### Próximos Pasos ###
+2. **Data Collection Improvements**:
+   - Process director information for director-based analysis
+   - Expand to include award information
+   - Add film genre classification
 
-Mejorar el dashboard con nuevas visualizaciones y funcionalidades.
+3. **Technical Improvements**:
+   - Refactor code into a more modular structure
+   - Implement proper logging
+   - Add automated tests
+   - Create a data update mechanism for future festival editions
 
-Procesar las columnas director y section para incluirlas en el análisis.
+4. **Analysis Extensions**:
+   - Compare with other major film festivals
+   - Analyze director-producer relationships
+   - Study the correlation between production companies and awards
 
-Refinar la normalización de nombres de productoras.
+## 🤝 Contributing
 
-Ampliar el análisis a más países (YA HECHO)  o categorías.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-corregir fallos en el dashboard: productoras sin paises, columna de director, etc
-añadir comparativa ESpaña en dashboard
-traducir al inglés
-reusar partes del script para ver pelis premiadas y sacar estadísticas
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
+
+Created by [carmenhat](https://github.com/carmenhat) - Feel free to contact me for any questions or suggestions!

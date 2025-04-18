@@ -22,10 +22,11 @@ def extract_flag_emoji(country_text):
     return match.group(1) if match else ""
 
 def get_countries_from_string(country_string):
-    """Divide una cadena de países en una lista"""
-    if pd.isna(country_string) or country_string == "":
+    """Convierte una cadena como 'France, USA' en ['France', 'USA']"""
+    if pd.isna(country_string) or country_string.strip() == "":
         return []
-    return [c.strip() for c in country_string.split(',')]
+    return [c.strip().title() for c in country_string.split(',') if c.strip()]
+
 
 def count_countries(df, country_column):
     """Cuenta la frecuencia de cada país en el DataFrame"""
@@ -39,7 +40,7 @@ def count_countries(df, country_column):
 def load_data():
     # Intentar cargar el archivo con datos expandidos, si no existe usar el anterior
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    expanded_file = os.path.join(script_dir, "datos_generados/cannes_con_paises_expandidos.xlsx")
+    expanded_file = os.path.join(script_dir, "datos_generados/cannes_dataset_unificado.xlsx")
     original_file = os.path.join(script_dir, "datos_generados/cannes_con_productoras_normalizadas.xlsx")
     
     if os.path.exists(expanded_file):
@@ -52,11 +53,16 @@ def load_data():
     # Cargar el DataFrame
     df = pd.read_excel(file_path)
     
-    # Crear columna para usar en análisis (usar country_expanded si existe, sino usar country_esp_fra_usa)
+    # Crear columna para análisis basada en los datos disponibles
     if 'country_expanded' in df.columns:
         df['countries_for_analysis'] = df['country_expanded']
+    elif 'countries' in df.columns:
+        df['countries_for_analysis'] = df['countries']
     else:
-        df['countries_for_analysis'] = df['country_esp_fra_usa']
+        st.error("❌ No se encontró ninguna columna válida de países. Añade 'country_expanded' o 'countries'.")
+        st.stop()
+
+
     
     # Extraer año como entero
     df['year'] = df['year'].astype(int)
@@ -69,13 +75,23 @@ def load_data():
     # Crear columnas binarias para cada país
     for country in unique_countries:
         df[country] = df['countries_for_analysis'].apply(
-            lambda x: 1 if pd.notna(x) and country in x else 0
+            lambda x: 1 if country in get_countries_from_string(x) else 0
         )
+
+
+    df['total_movies'] = df[list(unique_countries)].sum(axis=1)
+
     
     return df, list(unique_countries)
 
 # Cargar los datos
 df, all_countries = load_data()
+st.subheader("✅ Datos cargados")
+st.write("Columnas del DataFrame:")
+st.write(df.columns.tolist())
+
+st.write("Primeras filas de 'countries_for_analysis':")
+st.dataframe(df[['countries_for_analysis']].head(10))
 
 # Encabezado
 st.title("🎬 Análisis Internacional del Festival de Cannes")

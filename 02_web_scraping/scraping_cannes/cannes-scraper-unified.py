@@ -105,14 +105,15 @@ def clean_movie_title(title):
     
     return clean_title
 
-def extract_films_from_wiki():
+def extract_films_and_companies_from_wiki():
     """
-    Extrae la lista de películas del Festival de Cannes entre 2015-2023 desde Wikipedia.
+    Extrae la lista de películas del Festival de Cannes entre 2015-2023 desde Wikipedia
+    y obtiene información de productoras directamente de cada página de película en una sola pasada.
     
     Returns:
-        DataFrame con información básica de las películas
+        DataFrame con información básica de las películas y sus productoras
     """
-    print("🌐 Iniciando extracción de películas de Wikipedia...")
+    print("🌐 Iniciando extracción unificada de películas y productoras de Wikipedia...")
     
     data = []
     
@@ -187,11 +188,41 @@ def extract_films_from_wiki():
                         else:  # Si ya hay uno, añadimos coma y el nuevo
                             country_flag += f", {emoji_country}"
                 
-                # Extraer productoras si existe una columna relevante
-                production_company = ""
+                # Extraer productoras si existe una columna relevante en la tabla de la lista
+                production_company_table = ""
                 for i, h in enumerate(headers):
                     if ("production" in h or "studio" in h) and i < len(cols):
-                        production_company = cols[i].get_text(strip=True)
+                        production_company_table = cols[i].get_text(strip=True)
+                
+                # FASE NUEVA: Obtener productoras directamente de la página de la película
+                production_company_wiki_page = ""
+                if film_wiki_url:
+                    print(f"🔎 Accediendo a la página de {film} ({year})")
+                    try:
+                        # Realizar solicitud a la página de la película
+                        wiki_response = requests.get(film_wiki_url, headers=HEADERS, timeout=10)
+                        wiki_response.raise_for_status()
+                        
+                        # Parsear y buscar en el infobox
+                        wiki_soup = BeautifulSoup(wiki_response.text, "html.parser")
+                        infobox = wiki_soup.find("table", class_="infobox vevent")
+                        
+                        if infobox:
+                            for info_row in infobox.find_all("tr"):
+                                th = info_row.find("th")
+                                td = info_row.find("td")
+                                if th and td:
+                                    label = th.get_text(strip=True).lower()
+                                    if "production" in label or "studio" in label or "productora" in label:
+                                        production_company_wiki_page = td.get_text(separator=", ", strip=True)
+                                        print(f"✅ Productora encontrada: {production_company_wiki_page}")
+                                        break
+                        
+                        # Pausa breve para no sobrecargar Wikipedia
+                        time.sleep(1)
+                        
+                    except Exception as e:
+                        print(f"❌ Error al acceder a la página de la película {film_wiki_url}: {e}")
                 
                 # Añadir datos a la lista
                 data.append({
@@ -201,7 +232,8 @@ def extract_films_from_wiki():
                     "countries": countries,
                     "section": "Official Selection (Wikipedia)",
                     "country_emoji": country_flag,
-                    "production_company_wiki": production_company,
+                    "production_company_wiki": production_company_table,
+                    "production_company_wiki_page": production_company_wiki_page,
                     "film_wiki_url": film_wiki_url
                 })
         
@@ -214,13 +246,11 @@ def extract_films_from_wiki():
     # Crear DataFrame con todos los datos recopilados
     if data:
         films_df = pd.DataFrame(data)
-        print(f"✅ Se extrajeron datos de {len(films_df)} películas")
+        print(f"✅ Se extrajeron datos de {len(films_df)} películas con sus productoras")
         return films_df
     else:
         print("❌ No se encontraron datos de películas")
         return pd.DataFrame()
-
-def extract_wiki_production_companies(df):
     """
     Enriquece el DataFrame con las productoras extraídas de las páginas de Wikipedia
     de cada película.
@@ -664,20 +694,17 @@ def main():
     try:
         print("🚀 Iniciando proceso unificado de extracción de datos de Cannes...")
         
-        # Paso 1: Extracción inicial desde Wikipedia
-        films_df = extract_films_from_wiki()
+        # Paso 1: Extracción unificada desde Wikipedia (películas + productoras)
+        films_df = extract_films_and_companies_from_wiki()
         
         if films_df.empty:
             print("❌ No se pudieron extraer datos. Fin del proceso.")
             return
         
-        # Paso 2: Enriquecer con productoras desde Wikipedia
-        films_df = extract_wiki_production_companies(films_df)
-        
-        # Paso 3: Enriquecer con datos de IMDb (IDs, productoras y países)
+        # Paso 2: Enriquecer con datos de IMDb (IDs, productoras y países)
         films_df = enrich_with_imdb_data(films_df)
         
-        # Paso 4: Normalizar productoras
+        # Paso 3: Normalizar productoras
         normalizer = ProductionCompanyNormalizer()
         films_df = consolidate_production_companies(films_df, normalizer)
         
@@ -693,5 +720,11 @@ def main():
     except Exception as e:
         print(f"\n❌ Error en el procesamiento: {e}")
 
+
+
 if __name__ == "__main__":
     main()
+    # Ejecutar la función principal
+    # Si se ejecuta como script, se llama a la función main
+    # Para evitar que se ejecute al importar el módulo
+    # Se asegura que el script no se ejecute al importar el módulo   
