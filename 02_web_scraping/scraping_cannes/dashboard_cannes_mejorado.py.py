@@ -86,12 +86,7 @@ def load_data():
 
 # Cargar los datos
 df, all_countries = load_data()
-st.subheader("✅ Datos cargados")
-st.write("Columnas del DataFrame:")
-st.write(df.columns.tolist())
 
-st.write("Primeras filas de 'countries_for_analysis':")
-st.dataframe(df[['countries_for_analysis']].head(10))
 
 # Encabezado
 st.title("🎬 Análisis Internacional del Festival de Cannes")
