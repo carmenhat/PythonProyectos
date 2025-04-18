@@ -38,51 +38,60 @@ def count_countries(df, country_column):
 # Cargar datos
 @st.cache_data
 def load_data():
-    # Intentar cargar el archivo con datos expandidos, si no existe usar el anterior
+    # Intentar cargar el archivo con datos expandidos
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    expanded_file = os.path.join(script_dir, "datos_generados/cannes_dataset_unificado.xlsx")
-    original_file = os.path.join(script_dir, "datos_generados/cannes_con_productoras_normalizadas.xlsx")
+    file_path = os.path.join(script_dir, "datos_generados/cannes_dataset_unificado.xlsx")
     
-    if os.path.exists(expanded_file):
-        file_path = expanded_file
-        st.sidebar.success("✅ Usando datos expandidos con información adicional de países")
+    if os.path.exists(file_path):
+        st.sidebar.success("✅ Usando datos del archivo cannes_dataset_unificado.xlsx")
     else:
-        file_path = original_file
-        st.sidebar.warning("⚠️ Archivo de datos expandidos no encontrado. Usando datos originales.")
+        st.error("❌ No se encontró el archivo cannes_dataset_unificado.xlsx")
+        st.stop()
     
     # Cargar el DataFrame
     df = pd.read_excel(file_path)
     
     # Crear columna para análisis basada en los datos disponibles
-    if 'country_expanded' in df.columns:
-        df['countries_for_analysis'] = df['country_expanded']
-    elif 'countries' in df.columns:
+    # Usando 'countries' como columna principal para el análisis
+    if 'countries' in df.columns:
         df['countries_for_analysis'] = df['countries']
     else:
-        st.error("❌ No se encontró ninguna columna válida de países. Añade 'country_expanded' o 'countries'.")
+        st.error("❌ No se encontró la columna 'countries' en el archivo.")
         st.stop()
-
-
     
     # Extraer año como entero
     df['year'] = df['year'].astype(int)
     
-    # Generar columnas dummy para cada país
+    # Generar el conjunto de países únicos
     unique_countries = set()
     for countries in df['countries_for_analysis'].dropna():
         unique_countries.update(get_countries_from_string(countries))
+    unique_countries = list(unique_countries)
     
-    # Crear columnas binarias para cada país
+    # OPTIMIZACIÓN: Crear todas las columnas de países de una vez
+    # 1. Crear un diccionario para almacenar todas las columnas de países
+    country_columns = {}
     for country in unique_countries:
-        df[country] = df['countries_for_analysis'].apply(
+        country_columns[country] = df['countries_for_analysis'].apply(
             lambda x: 1 if country in get_countries_from_string(x) else 0
         )
-
-
-    df['total_movies'] = df[list(unique_countries)].sum(axis=1)
-
     
-    return df, list(unique_countries)
+    # 2. Convertir el diccionario a DataFrame
+    country_df = pd.DataFrame(country_columns)
+    
+    # 3. Unir las columnas de países al DataFrame original
+    df = pd.concat([df, country_df], axis=1)
+    
+    # 4. Añadir columna de total_movies
+    df['total_movies'] = df[unique_countries].sum(axis=1)
+    
+    # Adaptación para las productoras
+    if 'productoras_normalizadas' in df.columns:
+        df['productoras_consolidadas_normalized'] = df['productoras_normalizadas']
+    elif 'productoras_consolidadas' in df.columns:
+        df['productoras_consolidadas_normalized'] = df['productoras_consolidadas']
+    
+    return df, unique_countries
 
 # Cargar los datos
 df, all_countries = load_data()
@@ -242,13 +251,28 @@ with tab2:
     st.subheader("Análisis de Co-producciones")
     
     # Contar películas por número de países involucrados
-    filtered_df['num_countries'] = filtered_df['countries_for_analysis'].apply(
-        lambda x: 0 if pd.isna(x) else len(get_countries_from_string(x))
-    )
+filtered_df['num_countries'] = filtered_df['countries_for_analysis'].apply(
+    lambda x: 0 if pd.isna(x) else len(get_countries_from_string(x))
+)
+# Crear una columna para indicar si hay datos de país disponibles
+filtered_df['has_country_data'] = filtered_df['countries_for_analysis'].notna() & (filtered_df['countries_for_analysis'] != "")
+
+# Evolución de co-producciones a lo largo del tiempo
+# Solo considerar películas con datos de país para el cálculo del promedio
+avg_countries = filtered_df[filtered_df['has_country_data']].groupby('year')['num_countries'].mean().reset_index()
+
+# También podemos crear una visualización del porcentaje de películas con datos de país
+movies_with_country_data = filtered_df.groupby('year').agg(
+    total_movies=('title', 'count'),
+    movies_with_countries=('has_country_data', 'sum')
+).reset_index()
+
+movies_with_country_data['percent_with_data'] = (movies_with_country_data['movies_with_countries'] / 
+                                             movies_with_country_data['total_movies'] * 100).round(1)
+
+col1, col2 = st.columns(2)
     
-    col1, col2 = st.columns(2)
-    
-    with col1:
+with col1:
         # Distribución de co-producciones
         coprod_counts = filtered_df['num_countries'].value_counts().sort_index()
         coprod_df = pd.DataFrame({
@@ -266,7 +290,7 @@ with tab2:
         fig_coprod.update_xaxes(type='category')
         st.plotly_chart(fig_coprod, use_container_width=True)
     
-    with col2:
+with col2:
         # Evolución de co-producciones a lo largo del tiempo
         avg_countries = filtered_df.groupby('year')['num_countries'].mean().reset_index()
         

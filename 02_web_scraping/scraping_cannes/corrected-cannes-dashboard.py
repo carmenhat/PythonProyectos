@@ -13,6 +13,7 @@ import seaborn as sns
 from datetime import datetime
 import logging
 from pathlib import Path
+import base64
 
 # Configurar logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -24,9 +25,8 @@ st.set_page_config(
     page_icon="🎬",
     layout="wide",
     initial_sidebar_state="expanded"
-    return
 )
-# Removed as it is outside any function and causes a syntax error
+
 
 # Aplicar CSS personalizado para mejorar la interfaz
 st.markdown("""
@@ -892,6 +892,10 @@ def generate_automatic_insights(df, year_range=None):
         })
     
     return insights
+
+if not explorer_df.empty:
+
+    st.markdown(get_table_download_link(explorer_df), unsafe_allow_html=True)
 ### me falta acabar esta función
 def create_network_graph(df, selected_countries=None, highlight_country=None, min_weight=1):
     """
@@ -906,7 +910,6 @@ def create_network_graph(df, selected_countries=None, highlight_country=None, mi
     Returns:
         plotly.graph_objects.Figure: Objeto Figure de Plotly con el gráfico de red.
     """
-
     # 1. Preparar los datos de los enlaces (co-producciones)
     source, target, weight = get_coproduction_links(df, 'countries_for_analysis')
     links_df = pd.DataFrame({'source': source, 'target': target, 'weight': weight})
@@ -914,11 +917,11 @@ def create_network_graph(df, selected_countries=None, highlight_country=None, mi
     links_df = links_df[links_df['weight'] >= min_weight]
 
     # 2. Crear un DataFrame de nodos (países)
-    all_countries = list(set(links_df['source'].unique()).union(links_df['target'].unique()))
-    nodes_df = pd.DataFrame({'id': all_countries})
+    all_countries = list(set(links_df['source'].unique()).union(set(links_df['target'].unique())))
+    nodes_df = pd.DataFrame({'id': list(all_countries)})
     # Asignar nombres y colores basados en COUNTRY_MAPPING (si está definido)
-    nodes_df['name'] = nodes_df['id'].map(lambda x: COUNTRY_MAPPING[x]['name'] if x in COUNTRY_MAPPING else x)
-    nodes_df['color'] = nodes_df['id'].map(lambda x: COUNTRY_MAPPING[x]['color'] if x in COUNTRY_MAPPING else '#CCCCCC')  # Gris por defecto
+    nodes_df['name'] = nodes_df['id'].map(lambda x: COUNTRY_MAPPING.get(x, {}).get('name', x))
+    nodes_df['color'] = nodes_df['id'].map(lambda x: COUNTRY_MAPPING.get(x, {}).get('color', '#CCCCCC'))  # Gris por defecto
 
     # 3. Calcular el tamaño de los nodos basado en la cantidad de conexiones
     node_degree = pd.concat([links_df['source'], links_df['target']]).value_counts()
@@ -947,6 +950,7 @@ def create_network_graph(df, selected_countries=None, highlight_country=None, mi
         hoverinfo='none',
         mode='lines'
     )
+    
     node_trace = go.Scatter(
         x=[],
         y=[],
@@ -980,9 +984,10 @@ def create_network_graph(df, selected_countries=None, highlight_country=None, mi
     # 8. Personalizar el hovertext para mostrar información relevante
     node_adjacencies = []
     node_text = []
-    for node, adjacencies in enumerate(G.adjacency()):
-        node_adjacencies.append(len(adjacencies[1]))
-node_text.append(f"País: {adjacencies[0]}\n# de conexiones: {len(adjacencies[1])}")
+    for node in G.nodes():
+        adjacencies = list(G.adj[node])
+        node_adjacencies.append(len(adjacencies))
+        node_text.append(f"País: {node}\n# de conexiones: {len(adjacencies)}")
     node_trace['text'] = node_text
 
     # 9. Crear el layout de Plotly
@@ -995,75 +1000,18 @@ node_text.append(f"País: {adjacencies[0]}\n# de conexiones: {len(adjacencies[1]
     )
 
     # 10. Crear la figura y añadir las trazas
-    fig = go.Figure(data=[edge_trace, node_trace],
-                    layout=layout)
-
+    fig = go.Figure(data=[edge_trace, node_trace], layout=layout)
     return fig
-
-            )
-        
- # Interfaz principal del dashboard (sin acabar)
+# Interfaz principal del dashboard (sin acabar)
 
 def main():
-    """
-    Función principal del dashboard que gestiona la interfaz y la lógica de la aplicación
-    """
-    # Título y descripción
-    st.markdown("# 🎬 Festival de Cannes - Análisis Internacional")
-    st.markdown("""
-    Este dashboard analiza la presencia internacional en el Festival de Cannes a lo largo de los años,
-    con un enfoque especial en la participación española y sus co-producciones.
-    """)
-    
-    # Cargar datos
     try:
-        # Intentar cargar desde caché para mejorar rendimiento
-        @st.cache_data
-        def load_data():
-            """Carga y preprocesa los datos principales"""
-            # Intentar varias ubicaciones comunes
-            possible_paths = [
-                "./datos_generados/cannes_dataset_unificado.xlsx"
-            ]
-            for path in possible_paths:
-                if os.path.exists(path):
-                    logger.info(f"Cargando datos desde {path}")
-                    df = pd.read_excel(path)
-                    
-                    # Preprocesamiento básico
-                    logger.info("Preprocesando datos...")
-                    
-                    # Asegurar que el año sea numérico
-                    df['year'] = pd.to_numeric(df['year'], errors='coerce')
-                    
-                    # Crear columna para análisis de países
-                    if 'imdb_countries' in df.columns:
-                        df['countries_for_analysis'] = df['imdb_countries'].fillna(df['countries'])
-                    else:
-                        df['countries_for_analysis'] = df['countries']
-                    
-                    # Columnas indicadoras para países principales
-                    main_countries = ['Spain', 'France', 'Italy', 'USA', 'United Kingdom', 'Germany']
-                    for country in main_countries:
-                        df[country] = df['countries_for_analysis'].apply(
-                            lambda x: 1 if pd.notna(x) and country in get_countries_from_string(x) else 0
-                        )
-                    
-                    # Contar número de países por película
-                    df['num_countries'] = df['countries_for_analysis'].apply(
-                        lambda x: len(get_countries_from_string(x)) if pd.notna(x) else 0
-                    )
-                    
-                    logger.info(f"Datos cargados: {len(df)} registros")
-                    return df
-            
-            # Si no se encuentra el archivo, mostrar error
-            st.error("No se pudo encontrar el archivo de datos. Por favor, verifica la ubicación.")
-            logger.error("No se encontró el archivo de datos")
-            return pd.DataFrame()
-            
+    
         df = load_data()
-        
+    except Exception as e:
+        st.error(f"Error al cargar datos: {str(e)}")
+        logger.error(f"Error crítico: {str(e)}", exc_info=True)
+        return  # Salir de la función       
         # Verificar si los datos se cargaron correctamente
         if df.empty:
             st.stop()
@@ -1074,7 +1022,40 @@ def main():
         
         # Sidebar para controles
         st.sidebar.header("Filtros y Controles")
-        
+        # Añadir un selector de tema
+with st.sidebar:
+    st.write("## Configuración del dashboard")
+    theme = st.selectbox(
+        "Tema de color",
+        options=["Estándar", "Alto contraste", "Modo oscuro"],
+        index=0
+    )
+    
+    # Lógica para aplicar el tema seleccionado
+    if theme == "Alto contraste":
+        st.markdown("""
+        <style>
+        .stApp {
+            background-color: #FFFFFF;
+        }
+        h1, h2, h3 {
+            color: #000000 !important;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+    elif theme == "Modo oscuro":
+        st.markdown("""
+        <style>
+        .stApp {
+            background-color: #121212;
+            color: #E0E0E0;
+        }
+        h1, h2, h3 {
+            color: #FFFFFF !important;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
         # Selector de rango de años
         year_range = st.sidebar.slider(
             "Rango de años",
@@ -1349,6 +1330,8 @@ def main():
                     yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
                     height=600
                 )
+                    
+                
                 
                 col2.plotly_chart(fig_network, use_container_width=True)
             else:
@@ -1433,6 +1416,7 @@ def main():
 if __name__ == "__main__":
     main()
 
+    
 
 
 # Implementar caching para funciones pesadas que no cambian frecuentemente
@@ -1453,39 +1437,7 @@ def get_coproduction_network_data(df, min_weight=1):
             filtered_weight.append(w)
     
     return filtered_source, filtered_target, filtered_weight
-# Añadir un selector de tema
-with st.sidebar:
-    st.write("## Configuración del dashboard")
-    theme = st.selectbox(
-        "Tema de color",
-        options=["Estándar", "Alto contraste", "Modo oscuro"],
-        index=0
-    )
-    
-    # Lógica para aplicar el tema seleccionado
-    if theme == "Alto contraste":
-        st.markdown("""
-        <style>
-        .stApp {
-            background-color: #FFFFFF;
-        }
-        h1, h2, h3 {
-            color: #000000 !important;
-        }
-        </style>
-        """, unsafe_allow_html=True)
-    elif theme == "Modo oscuro":
-        st.markdown("""
-        <style>
-        .stApp {
-            background-color: #121212;
-            color: #E0E0E0;
-        }
-        h1, h2, h3 {
-            color: #FFFFFF !important;
-        }
-        </style>
-        """, unsafe_allow_html=True)
+
 # Botón para descargar datos filtrados
 def get_table_download_link(df, filename="datos_filtrados.csv"):
     """Genera un enlace de descarga para un DataFrame"""
@@ -1494,6 +1446,4 @@ def get_table_download_link(df, filename="datos_filtrados.csv"):
     href = f'<a href="data:file/csv;base64,{b64}" download="{filename}">Descargar datos CSV</a>'
     return href
 
-# En la sección del explorador de películas
-if not explorer_df.empty:
-    st.markdown(get_table_download_link(explorer_df), unsafe_allow_html=True)
+
