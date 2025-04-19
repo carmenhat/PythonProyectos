@@ -55,22 +55,17 @@ st.plotly_chart(fig2)
 st.subheader("Top productoras por país")
 
 # Mensajes de depuración para verificar los datos
-st.subheader("Depuración de datos")
+
 
 # Verificar si la columna existe
 if "productoras_consolidadas_normalized" in df.columns:
-    st.write("Columna 'productoras_consolidadas_normalized' encontrada.")
-    st.write("Ejemplo de datos:")
-    st.write(df["productoras_consolidadas_normalized"].head())
+
 
     # Verificar datos filtrados
-    st.write("Datos filtrados por año:")
-    st.write(df_filtered.head())
+    
 
     # Verificar datos de productoras
-    df_top = df_filtered[df_filtered["productoras_consolidadas_normalized"].notna() & df_filtered[["España", "Francia", "EEUU"]].any(axis=1)].copy()
-    st.write("Datos después de filtrar por productoras:")
-    st.write(df_top.head())
+    
 
     # Filtrar datos relevantes y crear lista de productoras
     df_top = df_filtered[df_filtered["productoras_consolidadas_normalized"].notna() & 
