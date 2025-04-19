@@ -96,7 +96,7 @@ Enfoque principal en España y comparativas internacionales.
 
 ### Visualizaciones ###
 
-Se ha desarrollado un dashboard interactivo utilizando Streamlit, con el nombre provisional dashboard_cannes_mejorado. Este incluye:
+Se ha desarrollado un dashboard interactivo utilizando Streamlit, con el nombre provisional dashboard_cannes_nuevo. Este incluye:
 
 Información recopilada de las películas.
 
@@ -136,7 +136,7 @@ Abrir el dashboard:
 
 ```bash
 
-streamlit run dashboard_cannes_mejorado.py
+streamlit run dashboard_cannes_nuevo.py
 ```
 ### Retos y Aprendizajes ###
 
@@ -158,10 +158,19 @@ Siendo mi primer proyecto de este tipo, el flujo de trabajo es algo redundante e
 
 Mejorar el dashboard con nuevas visualizaciones y funcionalidades.
 
-Procesar las columnas director y section para incluirlas en el análisis.
+Procesar las columnas director y section para incluirlas en el análisis ( si llego a usarlas)
 
-Refinar la normalización de nombres de productoras.
 corregir fallos en el dashboard: productoras sin paises, columna de director, etc
 añadir comparativa ESpaña en dashboard
 traducir al inglés
 reusar partes del script para ver pelis premiadas y sacar estadísticas
+
+
+estructura nuevo dashboard modular:
+carpeta_principal/
+├── dashboard-cannes-mejorado.py  # script principal
+├── modules/                      # Carpeta de módulos
+    ├── __init__.py               # Archivo vacío para marcar el directorio como un paquete Python
+    ├── visualizations.py         # El módulo de visualizaciones
+    ├── data_processing.py        # El módulo de procesamiento de datos
+    └── kpis.py                   # El módulo de KPIs 
